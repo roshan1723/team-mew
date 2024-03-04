@@ -1,3 +1,3 @@
-**Smart Alarm Clock**
+# **Smart Alarm Clock**
 
 Team Mew
