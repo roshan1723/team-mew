@@ -54,9 +54,9 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen name="Home" component={HomeScreen} />
-        <Tab.Screen name="Bluetooth" component={BluetoothScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
-        <Tab.Screen name="Report" component={ReportScreen} />
+        <Tab.Screen name="Report" component={BluetoothScreen} />
+        <Tab.Screen name="Bluetooth" component={SettingsScreen} />
+        <Tab.Screen name="Settings" component={ReportScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
