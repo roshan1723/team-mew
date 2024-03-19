@@ -5,8 +5,8 @@ import random
 # Set constants
 source_folder = 'images'
 destination_folder = 'images_subset'
-folder_cap = 10
-images_cap = 200
+folder_cap = 5
+images_cap = 500
 
 # Create the destination folder if it doesn't exist
 os.makedirs(destination_folder, exist_ok=True)
@@ -29,8 +29,11 @@ for folder in selected_folders:
     # Create an empty folder
     os.makedirs(destination_path, exist_ok=True)
 
+    # Print the name of the folder
+    print(f"{folder}")
+
     # Get a list of all images in the source folder
-    images = [image for image in os.listdir(source_path) if image.lower().endswith('.jpg')]
+    images = [image for image in os.listdir(source_path) if image.lower().endswith('.jpg') or image.lower().endswith('.jpeg')]
 
     for i in range(images_cap):
         image = images[i]

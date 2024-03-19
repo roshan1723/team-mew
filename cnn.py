@@ -1,28 +1,37 @@
 import os
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.applications import MobileNetV2, ResNet50
+from tensorflow.keras.applications import MobileNetV2, ResNet50, InceptionV3
 from tensorflow.keras.callbacks import LearningRateScheduler
+from keras.layers import AveragePooling2D, Dropout, Dense, Flatten
 from tensorflow.keras import layers, models
+from keras.models import Model
 import pickle
 
 # define constants
 batch_size = 64
-epochs = 50
+epochs = 15
 image_size = (224, 224)
-num_classes = 101
-data_folder = 'images'
+num_classes = 5
+data_folder = 'images_subset'
+
+print("Foods:")
+print("------------------")
+for folder in os.listdir(data_folder):
+    print(folder)
+print()
 
 # data augmentation and preprocessing
 datagen = ImageDataGenerator(
     rescale=1./255,
-    rotation_range=30,
+    rotation_range=90,
     width_shift_range=0.2,
     height_shift_range=0.2,
     shear_range=0.2,
-    zoom_range=0.2,
+    zoom_range=[.8, 1],
     horizontal_flip=True,
-    fill_mode='nearest',
+    vertical_flip=True,
+    fill_mode='reflect',
     validation_split=0.2
 )
 
@@ -53,33 +62,35 @@ for layer in base_model.layers:
 # create new model on top of base model
 model = models.Sequential([
     base_model,
-    # layers.Conv2D(32, (3, 3), activation='relu'),
-    # layers.Conv2D(64, (3, 3), activation='relu'),
-    layers.Conv2D(128, (3, 3), activation='relu'),
-    layers.GlobalAveragePooling2D(),         # Flatten the 3D output to 1D
-    layers.Dense(256, activation='relu'),    # Add a fully connected layer
-    layers.Dropout(0.6),                     # Regularization
-    # layers.Dense(512, activation='relu'),   
-    # layers.Dropout(0.4),                     
+    layers.Conv2D(32, (3, 3), activation='relu', padding='same'),
+    layers.GlobalAveragePooling2D(),          # Flatten the 3D output to 1D
+    layers.Dense(256, activation='relu'),     # Add a fully connected layer
+    layers.Dropout(0.5),                      # Regularization          
+    layers.Dense(128, activation='relu'),    
+    layers.Dropout(0.1),                            
     layers.Dense(num_classes, activation='softmax')  # Output layer for classification
 ])
 
-model.summary()
+# model.summary()
 
 # define learning rate schedule
 def lr_schedule(epoch, lr):
-    if (epoch == 10):
+    if (epoch == 5):
+        return lr * 0.1
+    
+    if (epoch == 20):
         return lr * 0.1
     
     else:
         return lr
 
 # compile the model
-optimizer = tf.keras.optimizers.Adam(learning_rate=0.001)
+optimizer = tf.keras.optimizers.Adam(learning_rate=0.0001)
 model.compile(optimizer=optimizer, loss='categorical_crossentropy', metrics=['accuracy'])
 lr_scheduler = LearningRateScheduler(lr_schedule)
 
 # train the model on local data
+print("\nTraining model ...")
 model.fit(
     generator,
     steps_per_epoch=generator.samples // batch_size,
