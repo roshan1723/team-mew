@@ -1,19 +1,16 @@
 import os
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import ImageDataGenerator
-from tensorflow.keras.applications import MobileNetV2, ResNet50, InceptionV3
+from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.callbacks import LearningRateScheduler
-from keras.layers import AveragePooling2D, Dropout, Dense, Flatten
 from tensorflow.keras import layers, models
-from keras.models import Model
-import pickle
 
 # define constants
 batch_size = 64
-epochs = 15
+epochs = 20
 image_size = (224, 224)
-num_classes = 5
-data_folder = 'images_subset'
+num_classes = 20
+data_folder = 'images'
 
 print("Foods:")
 print("------------------")
@@ -63,12 +60,13 @@ for layer in base_model.layers:
 model = models.Sequential([
     base_model,
     layers.Conv2D(32, (3, 3), activation='relu', padding='same'),
-    layers.GlobalAveragePooling2D(),          # Flatten the 3D output to 1D
-    layers.Dense(256, activation='relu'),     # Add a fully connected layer
-    layers.Dropout(0.5),                      # Regularization          
-    layers.Dense(128, activation='relu'),    
-    layers.Dropout(0.1),                            
-    layers.Dense(num_classes, activation='softmax')  # Output layer for classification
+    layers.GlobalAveragePooling2D(),            # flatten the 3D output to 1D
+    layers.Dense(1024, activation='relu'),      # add a fully connected layer
+    layers.Dropout(0.5),                        # regularization 
+    layers.Dense(256, activation='relu'),    
+    layers.Dropout(0.2),                                
+    layers.Dense(128, activation='relu'),                              
+    layers.Dense(num_classes, activation='softmax')  # output layer for classification
 ])
 
 # model.summary()
@@ -78,7 +76,7 @@ def lr_schedule(epoch, lr):
     if (epoch == 5):
         return lr * 0.1
     
-    if (epoch == 20):
+    if (epoch == 15):
         return lr * 0.1
     
     else:
@@ -100,13 +98,11 @@ model.fit(
     callbacks=[lr_scheduler]
 )
 
-# Save test_generator and datagen to a file
-model.save('saved_model.h5')
-saved_data = {'test_generator': validation_generator, 'datagen': datagen}
-with open('saved_data.pkl', 'wb') as file:
-    pickle.dump(saved_data, file)
-print(f"Test generator and datagen saved")
-
 # evaluate the model
 loss, accuracy = model.evaluate(validation_generator)
 print(f'Validation accuracy: {accuracy}')
+
+# save the model to a file
+model.save('saved_model.h5')
+
+
