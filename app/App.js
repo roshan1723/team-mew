@@ -8,15 +8,6 @@ import ReportScreen from './screens/ReportScreen';
 import BluetoothScreen from './screens/BluetoothScreen';
 import SettingsScreen from './screens/SettingsScreen';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
-
 const Tab = createBottomTabNavigator();
 
 export default function App() {
