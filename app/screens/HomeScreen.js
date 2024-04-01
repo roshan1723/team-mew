@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import {styles} from '../Styles';
-
+import axios from 'axios';
 
 export default function HomeScreen() {
   const [foodname, setFood] = React.useState(null);
@@ -11,14 +11,13 @@ export default function HomeScreen() {
   }, []);
 
   // EXAMPLE CODE FOR MAKING AN API CALL - not currently functioning
-  const fetchData = async () => { 
+  const fetchData = async () => {
     try {
-      const response = await fetch('https://api.example.com/data');
-
-      const data = await response.json();
+      const response = await axios.get('https://api.example.com/data');
+      console.log(response.data);
       setFood(data.foodname);
-
-    } catch (error) {
+    } 
+    catch (error) {
       console.error('Error fetching data:', error);
     }
   };
