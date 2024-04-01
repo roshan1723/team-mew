@@ -29,4 +29,16 @@ export const styles = StyleSheet.create({
         textAlign: 'center',
         fontSize: 16,
     },
+    modifybutton: {
+        borderWidth: 2,
+        borderColor: 'black',
+        borderRadius: 10,
+        padding: 5,
+        marginTop: 10,
+    },
+    modifybuttonText: {
+        fontSize: 24,
+        
+    }
+
 });

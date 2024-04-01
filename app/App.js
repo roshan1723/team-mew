@@ -16,8 +16,6 @@ export default function App() {
       <Tab.Navigator>
         <Tab.Screen name="Summary" component={HomeScreen} />
         <Tab.Screen name="Report" component={ReportScreen} />
-        <Tab.Screen name="Bluetooth" component={BluetoothScreen} />
-        <Tab.Screen name="Settings" component={SettingsScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );

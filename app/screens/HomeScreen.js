@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
 import {styles} from '../Styles';
 import axios from 'axios';
 
@@ -23,10 +23,16 @@ export default function HomeScreen() {
   };
   // END EXAMPLE CODE
 
+  const handleButtonPress = () => {
+    alert('Food modification to be added in a future patch');
+  };
+
   return (
     <View style={styles.summary}>
       {foodname !== null ? <Text style={styles.name}>Food: {foodname}</Text> : <Text style={styles.name}>No food identified</Text>}
-
+      <TouchableOpacity onPress={handleButtonPress} style={styles.modifybutton}>
+        <Text style={styles.modifybuttonText}>✎ Edit Food</Text>
+      </TouchableOpacity>
       <View style={styles.table}>
         <View style={styles.row}>
           <Text style={styles.cell}>Calories</Text>
@@ -81,7 +87,9 @@ export default function HomeScreen() {
           <Text style={styles.cell}>0</Text>
         </View>
       </View>
+
       
+
     </View>
 
   );
