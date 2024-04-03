@@ -4,17 +4,8 @@ import numpy as np
 import tensorflow as tf
 from tensorflow.keras.preprocessing.image import load_img, img_to_array
 from tensorflow.keras.models import load_model
-
-# Constants
-image_size = (224, 224)
-num_classes = 20
-images_folder = 'images'
-
-# Load saved model
-model = load_model('saved_model.h5')
-
-# Get class labels
-class_labels = sorted(os.listdir(images_folder))
+import subprocess
+import time
 
 
 def preprocess_image(image_path):
@@ -24,41 +15,9 @@ def preprocess_image(image_path):
     return img_array
 
 
-# select random images for testing
-def select_random_images(num_images):
-    selected_images = []
-    for _ in range(num_images):
-
-        # randomly select a folder
-        folder_name = random.choice(os.listdir(images_folder))
-        folder_path = os.path.join(images_folder, folder_name)
-
-        # Randomly select an image from the folder
-        image_name = random.choice(os.listdir(folder_path))
-        image_path = os.path.join(folder_path, image_name)
-        selected_images.append(image_path)
-    return selected_images
-
-
-def predict_random_images():
-
-    test_images = select_random_images(30)
-
-    # Test the model on selected images
-    for image_path in test_images:
-        processed_image = preprocess_image(image_path)
-        
-        # Make prediction
-        prediction = model.predict(processed_image)
-        predicted_class = np.argmax(prediction)
-        
-        print("          Image:", image_path)
-        print("Predicted Class:", class_labels[predicted_class])
-        print()
-
 # predict all images from 'image_jetson' folder
-def predict_jetson_images():
-    jetson_images = [os.path.join('jetson_images', img) for img in os.listdir('jetson_images')]
+def predict_jetson_image(image_path):
+    jetson_images = [os.path.join('jetson_image', img) for img in os.listdir('jetson_image')]
     for image_path in jetson_images:
         # Preprocess the image
         processed_image = preprocess_image(image_path)
@@ -68,18 +27,44 @@ def predict_jetson_images():
         predicted_class = np.argmax(prediction)
         
         print("Image:", os.path.basename(image_path))
-        print("Predicted Class:", class_labels[predicted_class])
+        print("Model Prediction:", class_labels[predicted_class])
         print()
 
+def capture_image(output_path):
+    # start the camera
+    camera_process = subprocess.Popen(['nvgstcapture-1.0'], stdin=subprocess.PIPE)
+    time.sleep(1)
+
+    # take picture
+    camera_process.communicate(input=b'j\n')
+
+    time.sleep(1)
+
+    # quit camera
+    camera_process.communicate(input=b'q\n')
+    camera_process.wait()
+
+    # Rename the captured image to the desired output path
+    os.rename('capt0000.jpg', output_path)
+    print("Image captured\n")
 
 
 
-images_folder = 'jetson_images'
-files = os.listdir(images_folder)
+image_size = (224, 224)
+num_classes = 20
+images_folder = 'images'
 
-# predict images from 'image_jetson' folder
-predict_jetson_images()
+# Load saved model
+model = load_model('saved_model.h5')
 
-# predict random images from the dataset
-# predict_random_images()
+# Get class labels
+class_labels = sorted(os.listdir(images_folder))
+printf("Class labels created", class_labels)
+
+# capture image with Jetson
+output_path = "jetson_image"
+capture_image(output_path)
+
+# predict image with model
+predict_jetson_image(output_path)
 
