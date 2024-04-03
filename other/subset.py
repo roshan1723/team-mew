@@ -6,7 +6,7 @@ import random
 source_folder = 'images'
 destination_folder = 'images_subset'
 folder_cap = 5
-images_cap = 500
+images_cap = 2000
 
 # Create the destination folder if it doesn't exist
 os.makedirs(destination_folder, exist_ok=True)
