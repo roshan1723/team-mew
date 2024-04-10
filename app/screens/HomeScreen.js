@@ -31,7 +31,7 @@ export default function HomeScreen() {
     <View style={styles.summary}>
       {foodname !== null ? <Text style={styles.name}>Food: {foodname}</Text> : <Text style={styles.name}>No food identified</Text>}
       <TouchableOpacity onPress={handleButtonPress} style={styles.modifybutton}>
-        <Text style={styles.modifybuttonText}>✎ Edit Food</Text>
+        <Text style={styles.modifybuttonText}>✎  Edit Food</Text>
       </TouchableOpacity>
       <View style={styles.table}>
         <View style={styles.row}>

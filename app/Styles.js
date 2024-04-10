@@ -30,11 +30,13 @@ export const styles = StyleSheet.create({
         fontSize: 16,
     },
     modifybutton: {
-        borderWidth: 2,
+        borderWidth: 1,
         borderColor: 'black',
-        borderRadius: 10,
-        padding: 5,
+        borderRadius: 4,
+        padding: 3,
         marginTop: 10,
+        paddingHorizontal: 20,
+        paddingLeft:10,
     },
     modifybuttonText: {
         fontSize: 24,
