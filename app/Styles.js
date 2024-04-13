@@ -41,6 +41,27 @@ export const styles = StyleSheet.create({
     modifybuttonText: {
         fontSize: 24,
         
-    }
+    },
+    entryContainer: {
+        marginBottom: 10,
+        borderWidth: 1,
+        borderRadius: 5,
+        padding: 10,
+    },
+    reportRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+    },
+    reportCell: {
+        flex: 1,
+        marginRight: 10,
+    },
+
+    reportValue: {
+        marginTop: 2,
+    },
+    nutritionalInfoContainer: {
+        marginTop: 10,
+    },
 
 });
