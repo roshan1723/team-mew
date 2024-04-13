@@ -15,7 +15,7 @@ export default function App() {
     <NavigationContainer>
       <Tab.Navigator>
         <Tab.Screen name="Summary" component={HomeScreen} />
-        <Tab.Screen name="Report" component={ReportScreen} />
+        <Tab.Screen name="History" component={ReportScreen} />
       </Tab.Navigator>
     </NavigationContainer>
   );
