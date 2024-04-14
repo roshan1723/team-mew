@@ -4,12 +4,14 @@ from tensorflow.keras.preprocessing.image import ImageDataGenerator
 from tensorflow.keras.applications import MobileNetV2
 from tensorflow.keras.callbacks import LearningRateScheduler
 from tensorflow.keras import layers, models
+import tf2onnx
+import onnx
 
 # define constants
 batch_size = 64
 epochs = 20
 image_size = (224, 224)
-num_classes = 20
+num_classes = 10
 data_folder = 'images'
 
 print("Foods:")
@@ -76,7 +78,7 @@ def lr_schedule(epoch, lr):
     if (epoch == 5):
         return lr * 0.1
     
-    if (epoch == 15):
+    if (epoch == 10):
         return lr * 0.1
     
     else:
@@ -100,13 +102,14 @@ model.fit(
 
 # evaluate the model
 loss, accuracy = model.evaluate(validation_generator)
-print(f'Validation accuracy: {accuracy}')
+print(f'Validation accuracy: %{(accuracy * 100):.6f}')
 
 # save the model to a file
-if os.path.exists('saved_model.h5'):
-    os.remove('saved_model.h5')
-
 model.save('saved_model.h5')
-print("saved model to 'saved_model.h5'")
+
+# convert the keras model to ONNX format
+onnx_model, _ = tf2onnx.convert.from_keras(model)
+onnx.save_model(onnx_model, 'model_10foods.onnx')
+print("saved model")
 
 
