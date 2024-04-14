@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
-import {styles} from '../Styles';
+import { styles } from '../Styles';
 
 const HistoryEntry = ({ entry }) => {
   const [expanded, setExpanded] = React.useState(false);
@@ -25,30 +25,22 @@ const HistoryEntry = ({ entry }) => {
       {expanded && (
         <View style={styles.reportRow}>
           <View style={styles.nutritionalInfoContainer}>
-          
-          <Text style={styles.reportHeader}>Category</Text>
-          <Text style={styles.reportDetails}>Calories</Text>
-          <Text style={styles.reportDetails}>Carbohydrates</Text>
-          <Text style={styles.reportDetails}>Sodium</Text>
-          <Text style={styles.reportDetails}>Protein</Text>
-          <Text style={styles.reportDetails}>Total Fat</Text>
-          <Text style={styles.reportDetails}>Sugar</Text>
-          <Text style={styles.reportDetails}>Fiber</Text>
-          <Text style={styles.reportDetails}>Cholesterol</Text>
-          <Text style={styles.reportDetails}>Calcium</Text>
-          <Text style={styles.reportDetails}>Iron</Text>
-          <Text style={styles.reportDetails}>Saturated Fat</Text>
-          <Text style={styles.reportDetails}>Trans Fat</Text>
-
-          </View>
-          <View style={styles.nutritionalInfoContainer}>
-          <Text style={styles.reportHeader}>Amount (grams)</Text>
-          {Object.entries(entry.nutritionalInfo).map(([category, value]) => (
-            <View key={category}>
-              <Text style={styles.reportDetailsRight}>{value}</Text>
+            <View style={styles.tableRow}>
+              <Text style={[styles.reportHeader, styles.column]}>Category</Text>
+              <Text style={[styles.reportHeader, styles.column]}>Amount (grams)</Text>
             </View>
-          ))}
-          
+            
+            {Object.entries(entry.nutritionalInfo).map(([category, value]) => (
+              
+              <View key={category} style={styles.tableRow}>
+                
+
+                <Text style={[styles.reportDetails, styles.column]}>{category}</Text>
+                
+
+                <Text style={[styles.reportDetails, styles.column]}>{value}</Text>
+              </View>
+            ))}
           </View>
         </View>
       )}
@@ -56,10 +48,9 @@ const HistoryEntry = ({ entry }) => {
   );
 };
 
-
 export default function HomeScreen() {
   //TEMPORARY EXAMPLES
-  food1 = {
+  const food1 = {
     foodName: 'Apple',
     dateTime: '4/13/24 - 3:32pm',
     mass: 150,
@@ -78,7 +69,7 @@ export default function HomeScreen() {
       Trans_Fat: 0,
     },
   }
-  food2 = {
+  const food2 = {
     foodName: 'Cucumber',
     dateTime: '4/13/24 - 4:23pm',
     mass: 490,
@@ -97,7 +88,7 @@ export default function HomeScreen() {
       Trans_Fat: 0,
     },
   }
-  food3 = {
+  const food3 = {
     foodName: 'Orange',
     dateTime: '4/13/24 - 4:24pm',
     mass: 70,
@@ -122,6 +113,7 @@ export default function HomeScreen() {
     food2,
     food1,
   ]);
+
   return (
     <View style={styles.container}>
       <FlatList
@@ -132,3 +124,4 @@ export default function HomeScreen() {
     </View>
   );
 }
+

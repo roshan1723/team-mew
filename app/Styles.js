@@ -9,6 +9,7 @@ export const styles = StyleSheet.create({
         justifyContent: 'top', 
         alignItems: 'center', 
         marginTop:20, 
+        //backgroundColor: '#500000',
     },
     name: {
         fontSize: 32,
@@ -49,6 +50,7 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         padding: 10,
+        backgroundColor: '#500000',
     },
     reportRow: {
         flexDirection: 'row',
@@ -65,15 +67,16 @@ export const styles = StyleSheet.create({
     reportValue: {
         marginTop: 2,
         fontWeight: '800',
+        color: '#FFFFFF',
     },
     reportValueTime: {
         marginTop: 2,
         fontWeight: '400',
+        color: '#FFFFFF',
     },
 
     nutritionalInfoContainer: {
         marginTop: 15,
-        paddingHorizontal: 40,
         //paddingRight: 40,
         //paddingLeft: 40,
         marginHorizontal: 0,
@@ -82,18 +85,25 @@ export const styles = StyleSheet.create({
         //fontWeight: '800',
         textDecorationLine: 'underline',
         textAlign: 'center',
-        
+        color: '#FFFFFF',
     },
     reportDetails: {
         textAlign: 'center',
         borderWidth: 1,
-        paddingHorizontal: 20,
         left: 0,
+        borderColor: '#FFFFFF',
+        color: '#FFFFFF',
     },
     reportDetailsRight: {
         textAlign: 'center',
         borderWidth: 1,
         paddingHorizontal: 0,
-        right:30,
+    },
+    column: {
+        width: 150,
+    },
+    tableRow: {
+        flexDirection: 'row',
+        paddingHorizontal: '9.5%',
     },
 });
