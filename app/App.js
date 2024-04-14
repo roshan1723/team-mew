@@ -29,7 +29,7 @@ const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
 
 async function printSingleFirestoreEntry() {
-  const docRef = doc(firestore, 'things', 'yphUl3Yg8fW6avBEzNqZ');
+  const docRef = doc(firestore, 'smartscale', 'nutritionalinfo');
   try {
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {

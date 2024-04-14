@@ -12,6 +12,9 @@ export const styles = StyleSheet.create({
         paddingVertical:15, 
         backgroundColor: '#8b8b8b',
     },
+    reportBg: { 
+        backgroundColor: '#8b8b8b',
+    },
     name: {
         fontSize: 32,
         textDecorationLine: 'underline',
@@ -61,7 +64,7 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         padding: 10,
-        backgroundColor: '#8b8b8b',
+        backgroundColor: '#AFAFAF',
     },
     reportRow: {
         flexDirection: 'row',
