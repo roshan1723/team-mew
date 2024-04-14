@@ -10,6 +10,7 @@ const HistoryEntry = ({ entry }) => {
   };
 
   return (
+    <View style={styles.reportBg}>
     <TouchableOpacity onPress={toggleExpanded} style={styles.entryContainer}>
       <View style={styles.reportRow}>
         <View style={styles.reportCell}>
@@ -45,6 +46,7 @@ const HistoryEntry = ({ entry }) => {
         </View>
       )}
     </TouchableOpacity>
+    </View>
   );
 };
 
