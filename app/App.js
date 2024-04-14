@@ -8,6 +8,7 @@ import HomeScreen from './screens/HomeScreen';
 import ReportScreen from './screens/ReportScreen';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import AddValues from './screens/AddValues';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBhbabwCfGqORtZBuJ-so5tPaT2n1V6ekM",
@@ -50,6 +51,7 @@ export default function App() {
       <Tab.Navigator>
         <Tab.Screen name="Summary" component={HomeScreen} />
         <Tab.Screen name="History" component={ReportScreen} />
+        {/* <Tab.Screen name="AddValues" component={AddValues} /> */}
       </Tab.Navigator>
     </NavigationContainer>
   );
