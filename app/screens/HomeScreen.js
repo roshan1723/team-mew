@@ -82,7 +82,7 @@ export default function HomeScreen() {
           <Text style={styles.cell}>Iron</Text>
           <Text style={styles.cell}>0</Text>
         </View>
-        <View style={styles.row}>
+        <View style={styles.rowEnd}>
           <Text style={styles.cell}>Potassium</Text>
           <Text style={styles.cell}>0</Text>
         </View>

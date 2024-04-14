@@ -8,12 +8,14 @@ export const styles = StyleSheet.create({
         flex: 1, 
         justifyContent: 'top', 
         alignItems: 'center', 
-        marginTop:20, 
-        //backgroundColor: '#500000',
+        marginTop:0,
+        paddingVertical:15, 
+        backgroundColor: '#8b8b8b',
     },
     name: {
         fontSize: 32,
         textDecorationLine: 'underline',
+        color: '#500000',
     },
     table: {
         marginTop:30,
@@ -24,7 +26,14 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         borderBottomWidth: 1,
-        borderBottomColor: '#ccc',
+        borderBottomColor: '#687472',
+        paddingVertical: 10,
+    },
+    rowEnd: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        borderBottomWidth: 0,
+        borderBottomColor: '#687472',
         paddingVertical: 10,
     },
     cell: {
@@ -40,9 +49,11 @@ export const styles = StyleSheet.create({
         marginTop: 10,
         paddingHorizontal: 20,
         paddingLeft:10,
+        backgroundColor: '#AFAFAF',
     },
     modifybuttonText: {
         fontSize: 24,
+        //color: '#500000',
         
     },
     entryContainer: {
@@ -50,7 +61,7 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         borderRadius: 5,
         padding: 10,
-        backgroundColor: '#500000',
+        backgroundColor: '#8b8b8b',
     },
     reportRow: {
         flexDirection: 'row',
@@ -67,12 +78,12 @@ export const styles = StyleSheet.create({
     reportValue: {
         marginTop: 2,
         fontWeight: '800',
-        color: '#FFFFFF',
+        color: '#500000',
     },
     reportValueTime: {
         marginTop: 2,
         fontWeight: '400',
-        color: '#FFFFFF',
+        color: '#500000',
     },
 
     nutritionalInfoContainer: {
@@ -85,14 +96,14 @@ export const styles = StyleSheet.create({
         //fontWeight: '800',
         textDecorationLine: 'underline',
         textAlign: 'center',
-        color: '#FFFFFF',
+        //color: '#500000',
     },
     reportDetails: {
         textAlign: 'center',
         borderWidth: 1,
         left: 0,
-        borderColor: '#FFFFFF',
-        color: '#FFFFFF',
+        //borderColor: '#500000',
+        //color: '#500000',
     },
     reportDetailsRight: {
         textAlign: 'center',
