@@ -29,26 +29,9 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
 
-async function printSingleFirestoreEntry() {
-  const docRef = doc(firestore, 'smartscale', 'nutritionalinfo');
-  try {
-    const docSnap = await getDoc(docRef);
-    if (docSnap.exists()) {
-      console.log("Document data:", docSnap.data());
-    } else {
-      console.log("No such document!");
-    }
-  } catch (error) {
-    console.error("Error getting document:", error);
-  }
-}
-
 const Tab = createBottomTabNavigator();
 
 export default function App() {
-  useEffect(() => {
-    printSingleFirestoreEntry(); // Call the function on app start
-  }, []);
 
   return (
     <NavigationContainer>
@@ -57,7 +40,7 @@ export default function App() {
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,}}/>
         <Tab.Screen name="History" component={ReportScreen} options={{
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="history" color={color} />,}}/>
-        <Tab.Screen name="AddValues" component={AddValues}></Tab.Screen>
+        {/* <Tab.Screen name="AddValues" component={AddValues}></Tab.Screen> */}
       </Tab.Navigator>
     </NavigationContainer>
   );
