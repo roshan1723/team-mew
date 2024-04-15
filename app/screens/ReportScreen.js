@@ -1,6 +1,23 @@
 import * as React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
 import { styles } from '../Styles';
+import { initializeApp } from 'firebase/app';
+import { getFirestore, doc, getDoc, setDoc, getDocs, collection} from 'firebase/firestore';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBhbabwCfGqORtZBuJ-so5tPaT2n1V6ekM",
+  authDomain: "team-mew.firebaseapp.com",
+  databaseURL: "https://team-mew-default-rtdb.firebaseio.com",
+  projectId: "team-mew",
+  storageBucket: "team-mew.appspot.com",
+  messagingSenderId: "188350895735",
+  appId: "1:188350895735:web:84a8e3c20ce3605af0d872",
+  measurementId: "G-LYH77D92FM"
+};
+
+const app = initializeApp(firebaseConfig);
+const firestore = getFirestore(app);
+
 
 const HistoryEntry = ({ entry }) => {
   const [expanded, setExpanded] = React.useState(false);

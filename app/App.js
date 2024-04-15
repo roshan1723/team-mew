@@ -6,6 +6,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import HomeScreen from './screens/HomeScreen';
 import ReportScreen from './screens/ReportScreen';
+import TestHistory from './screens/TestHistory';
 import BluetoothScreen from './screens/BluetoothScreen';
 import SettingsScreen from './screens/SettingsScreen';
 import {styles} from './Styles';
@@ -57,6 +58,8 @@ export default function App() {
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,}}/>
         <Tab.Screen name="History" component={ReportScreen} options={{
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="history" color={color} />,}}/>
+        <Tab.Screen name="Testing" component={TestHistory} options={{
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,}}/>  
       </Tab.Navigator>
     </NavigationContainer>
   );
