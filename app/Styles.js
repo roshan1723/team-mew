@@ -126,4 +126,12 @@ export const styles = StyleSheet.create({
         padding: 10
       },
       
+
+    leftAlign: {
+        textAlign: 'left',
+    },
+    rightAlign: {
+        textAlign: 'right',
+    },
+
 });

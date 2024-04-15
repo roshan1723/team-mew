@@ -97,8 +97,8 @@ export default function HomeScreen() {
       </View>
       {Object.entries(nutritionalInfo).map(([key, value]) => (
         <View key={key} style={styles.row}>
-          <Text style={styles.cell}>{key}</Text>
-          <Text style={styles.cell}>{value}</Text>
+          <Text style={[styles.cell, styles.leftAlign]}>{key}:</Text>
+          <Text style={[styles.cell, styles.rightAlign]}>{value}</Text>
         </View>
       ))}
           {<View style={styles.table}>
