@@ -120,4 +120,10 @@ export const styles = StyleSheet.create({
         flexDirection: 'row',
         paddingHorizontal: '9.5%',
     },
+    buttonRow: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        padding: 10
+      },
+      
 });
