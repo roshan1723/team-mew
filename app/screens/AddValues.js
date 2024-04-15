@@ -39,7 +39,8 @@ const foods = [
     { FoodID: 17, FoodName: 'Potato', Calories: 770, Tot_Fat: 0.9, Sat_Fat: 0.3, Trans_Fat: 0, Cholesterol: 0, Sodium: 0.06, Tot_Carbs: 175, Fiber: 21, Tot_Sugar: 8.2, Protein: 20.5, Calcium: 0.12, Iron: 0.0081, Potassium: 4.25 },
     { FoodID: 18, FoodName: 'Broccoli', Calories: 340, Tot_Fat: 3.7, Sat_Fat: 1.1, Trans_Fat: 0, Cholesterol: 0, Sodium: 0.33, Tot_Carbs: 66.4, Fiber: 26, Tot_Sugar: 17, Protein: 28.2, Calcium: 0.47, Iron: 0.0073, Potassium: 3.16 },
     { FoodID: 19, FoodName: 'Carrot', Calories: 410, Tot_Fat: 2.4, Sat_Fat: 0.3, Trans_Fat: 0, Cholesterol: 0, Sodium: 0.69, Tot_Carbs: 95.8, Fiber: 28, Tot_Sugar: 47.4, Protein: 9.3, Calcium: 0.33, Iron: 0.003, Potassium: 3.2 },
-    { FoodID: 20, FoodName: 'Pear', Calories: 570, Tot_Fat: 1.4, Sat_Fat: 0.3, Trans_Fat: 0, Cholesterol: 0, Sodium: 0.01, Tot_Carbs: 152, Fiber: 31, Tot_Sugar: 97.5, Protein: 3.6, Calcium: 0.09, Iron: 0.0028, Potassium: 1.16 }
+    { FoodID: 20, FoodName: 'Pear', Calories: 570, Tot_Fat: 1.4, Sat_Fat: 0.3, Trans_Fat: 0, Cholesterol: 0, Sodium: 0.01, Tot_Carbs: 152, Fiber: 31, Tot_Sugar: 97.5, Protein: 3.6, Calcium: 0.09, Iron: 0.0028, Potassium: 1.16 },
+    { FoodID: 21, FoodName: 'Banana', Calories: 890, Tot_Fat: 3.3, Sat_Fat: 1.1, Trans_Fat: 0, Cholesterol: 0, Sodium: 0.01, Tot_Carbs: 228, Fiber: 26, Tot_Sugar: 122, Protein: 10, Calcium: 0.05, Iron: 0.0026, Potassium: 3.58 }
   ];
   
 

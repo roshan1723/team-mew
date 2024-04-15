@@ -26,6 +26,7 @@ export default function HomeScreen() {
   const [mass, setMass] = React.useState(0);
   const [nutritionalInfo, setNutritionalInfo] = React.useState({});
 
+  console.log("started homescreen");
   React.useEffect(() => {
     fetchData();
   }, []);
@@ -36,12 +37,21 @@ export default function HomeScreen() {
       const foodDoc = await getDoc(foodRef);
       if (foodDoc.exists()) {
         const data = foodDoc.data();
+        console.log("current fetched: ");
+        console.log(data);
+
+        
+        //CASE SENSITIVE
         setFood(data.foodname);
         setMass(data.mass);
         const nutritionRef = doc(firestore, "nutritionalinfo", data.foodname);
         const nutritionDoc = await getDoc(nutritionRef);
         if (nutritionDoc.exists()) {
           setNutritionalInfo(nutritionDoc.data());
+          console.log("nutritional info fetched: ");
+          console.log(nutritionDoc.data());
+        } else {
+          console.error("couldnt find current : ", data.foodname);
         }
       }
     } catch (error) {
@@ -52,7 +62,7 @@ export default function HomeScreen() {
   const handleRefreshPress = async () => {
     const newValues = Object.keys(nutritionalInfo).reduce((acc, key) => {
       if (typeof nutritionalInfo[key] === 'number') {
-        acc[key] = (nutritionalInfo[key] * mass) / 100;
+        acc[key] = (nutritionalInfo[key] * mass) / 1000;
       } else {
         acc[key] = nutritionalInfo[key];
       }
