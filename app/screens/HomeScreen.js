@@ -4,6 +4,8 @@ import { styles } from '../Styles';
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { format } from 'date-fns'; // Make sure to install date-fns if not already installed using npm install date-fns
+
 // import { firebaseConfig } from '../firebaseConfig'; // Your Firebase configuration
 
 const firebaseConfig = {
@@ -70,8 +72,12 @@ export default function HomeScreen() {
     }, {});
 
     try {
+      // Format the current date and time
+      const now = new Date();
+      const dateTimeFormat = format(now, 'M-d-H-mm-ss'); // 'H-mm-ss' represents hours, minutes, and seconds with hyphens
+
       // Add the new calculated data to the 'history' collection
-      await setDoc(doc(firestore, "history", foodname), newValues);
+      await setDoc(doc(firestore, "history", dateTimeFormat), newValues);
       alert('Nutritional information updated and added to history.');
     } catch (error) {
       console.error('Error updating history:', error);
