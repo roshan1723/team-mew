@@ -57,9 +57,7 @@ export default function App() {
         <Tab.Screen name="Summary" component={HomeScreen} options={{
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,}}/>
         <Tab.Screen name="History" component={ReportScreen} options={{
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="history" color={color} />,}}/>
-        <Tab.Screen name="Testing" component={TestHistory} options={{
-          tabBarIcon: ({ color }) => <FontAwesome size={28} name="cog" color={color} />,}}/>  
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="history" color={color} />,}}/> 
       </Tab.Navigator>
     </NavigationContainer>
   );
