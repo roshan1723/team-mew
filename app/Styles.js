@@ -129,9 +129,11 @@ export const styles = StyleSheet.create({
 
     leftAlign: {
         textAlign: 'left',
+        paddingLeft: 15,
     },
     rightAlign: {
         textAlign: 'right',
+        paddingRight: 15,
     },
 
 });
