@@ -63,7 +63,7 @@ const HistoryEntry = () => {
               <View style={styles.nutritionalInfoContainer}>
                 <View style={styles.tableRow}>
                   <Text style={[styles.reportHeader, styles.column]}>Category</Text>
-                  <Text style={[styles.reportHeader, styles.column]}>Amount (grams)</Text>
+                  <Text style={[styles.reportHeader, styles.column]}>Amount</Text>
                 </View>
                 <View style={styles.tableRow}>
                 <Text style={[styles.reportDetails, styles.column]}>Calories</Text>
@@ -71,47 +71,39 @@ const HistoryEntry = () => {
               </View>
               <View style={styles.tableRow}>
                 <Text style={[styles.reportDetails, styles.column]}>Protein</Text>
-                <Text style={[styles.reportDetails, styles.column]}>{item.Protein}</Text>
+                <Text style={[styles.reportDetails, styles.column]}>{item.Protein.toFixed(2)} g</Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={[styles.reportDetails, styles.column]}>Carbohydrates</Text>
-                <Text style={[styles.reportDetails, styles.column]}>{item.Tot_Carbs}</Text>
+                <Text style={[styles.reportDetails, styles.column]}>{parseFloat(item.Tot_Carbs.toFixed(2))} g</Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={[styles.reportDetails, styles.column]}>Sodium</Text>
-                <Text style={[styles.reportDetails, styles.column]}>{item.Sodium}</Text>
+                <Text style={[styles.reportDetails, styles.column]}>{parseFloat((item.Sodium*1000).toFixed(2))} mg</Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={[styles.reportDetails, styles.column]}>Total Fat</Text>
-                <Text style={[styles.reportDetails, styles.column]}>{item.Tot_Fat.toFixed(5)}</Text>
+                <Text style={[styles.reportDetails, styles.column]}>{parseFloat((item.Tot_Fat*1000).toFixed(2))} mg</Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={[styles.reportDetails, styles.column]}>Sugar</Text>
-                <Text style={[styles.reportDetails, styles.column]}>{item.Tot_Sugar}</Text>
+                <Text style={[styles.reportDetails, styles.column]}>{parseFloat(item.Tot_Sugar.toFixed(2))} g</Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={[styles.reportDetails, styles.column]}>Fiber</Text>
-                <Text style={[styles.reportDetails, styles.column]}>{item.Fiber}</Text>
-              </View>
-              <View style={styles.tableRow}>
-                <Text style={[styles.reportDetails, styles.column]}>Cholesterol</Text>
-                <Text style={[styles.reportDetails, styles.column]}>{item.Cholesterol}</Text>
+                <Text style={[styles.reportDetails, styles.column]}>{parseFloat(item.Fiber.toFixed(2))} g</Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={[styles.reportDetails, styles.column]}>Calcium</Text>
-                <Text style={[styles.reportDetails, styles.column]}>{item.Calcium}</Text>
+                <Text style={[styles.reportDetails, styles.column]}>{parseFloat((item.Calcium*1000).toFixed(2))} mg</Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={[styles.reportDetails, styles.column]}>Iron</Text>
-                <Text style={[styles.reportDetails, styles.column]}>{item.Iron}</Text>
+                <Text style={[styles.reportDetails, styles.column]}>{parseFloat((item.Iron*1000000).toFixed(2))} µg</Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={[styles.reportDetails, styles.column]}>Saturated Fat</Text>
-                <Text style={[styles.reportDetails, styles.column]}>{item.Sat_Fat}</Text>
-              </View>
-              <View style={styles.tableRow}>
-                <Text style={[styles.reportDetails, styles.column]}>Trans Fat</Text>
-                <Text style={[styles.reportDetails, styles.column]}>{item.Trans_Fat}</Text>
+                <Text style={[styles.reportDetails, styles.column]}>{parseFloat((item.Sat_Fat*1000).toFixed(2))} mg</Text>
               </View>
             </View>
             </View>
