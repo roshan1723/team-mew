@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, FlatList } from 'react-native';
+import { View, Text, FlatList,StyleSheet, TouchableOpacity} from 'react-native';
 import { initializeApp } from 'firebase/app';
+import { styles } from '../Styles';
 import { getFirestore, doc, getDoc, setDoc, getDocs, collection} from 'firebase/firestore';
 // import { firebaseConfig } from '../firebaseConfig'; // Your Firebase configuration
 
@@ -37,9 +38,23 @@ const HistoryScreen = () => {
       return () => {}; // Clean-up function
     }, []);
   
+    console.log(historyData[0])
+    const food1 = historyData[0]
+    const food2 = historyData[0]
+    const food3 = historyData[0]
+    
+
+    const [history, setHistory] = React.useState([
+        food3,
+        food2,
+        food1,
+      ]);
     return (
+    <View style={styles.reportBg}>
+      
       <View>
         <Text>History</Text>
+        
         <FlatList
           data={historyData}
           renderItem={({ item }) => (
@@ -50,6 +65,7 @@ const HistoryScreen = () => {
           keyExtractor={(item) => item.id}
         />
       </View>
+    </View>
     );
   };
   
