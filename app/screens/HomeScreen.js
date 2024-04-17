@@ -4,6 +4,8 @@ import { styles } from '../Styles';
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { format } from 'date-fns'; // Make sure to install date-fns if not already installed using npm install date-fns
+
 // import { firebaseConfig } from '../firebaseConfig'; // Your Firebase configuration
 
 const firebaseConfig = {
@@ -25,6 +27,7 @@ export default function HomeScreen() {
   const [mass, setMass] = React.useState(0);
   const [nutritionalInfo, setNutritionalInfo] = React.useState({});
 
+  console.log("started homescreen");
   React.useEffect(() => {
     fetchData();
   }, []);
@@ -35,12 +38,21 @@ export default function HomeScreen() {
       const foodDoc = await getDoc(foodRef);
       if (foodDoc.exists()) {
         const data = foodDoc.data();
+        console.log("current fetched: ");
+        console.log(data);
+
+        
+        //CASE SENSITIVE
         setFood(data.foodname);
         setMass(data.mass);
         const nutritionRef = doc(firestore, "nutritionalinfo", data.foodname);
         const nutritionDoc = await getDoc(nutritionRef);
         if (nutritionDoc.exists()) {
           setNutritionalInfo(nutritionDoc.data());
+          console.log("nutritional info fetched: ");
+          console.log(nutritionDoc.data());
+        } else {
+          console.error("couldnt find current : ", data.foodname);
         }
       }
     } catch (error) {
@@ -51,7 +63,7 @@ export default function HomeScreen() {
   const handleRefreshPress = async () => {
     const newValues = Object.keys(nutritionalInfo).reduce((acc, key) => {
       if (typeof nutritionalInfo[key] === 'number') {
-        acc[key] = (nutritionalInfo[key] * mass) / 100;
+        acc[key] = (nutritionalInfo[key] * mass) / 1000;
       } else {
         acc[key] = nutritionalInfo[key];
       }
@@ -59,8 +71,12 @@ export default function HomeScreen() {
     }, {});
 
     try {
+      // Format the current date and time
+      const now = new Date();
+      const dateTimeFormat = format(now, 'M-d-H-mm-ss'); // 'H-mm-ss' represents hours, minutes, and seconds with hyphens
+
       // Add the new calculated data to the 'history' collection
-      await setDoc(doc(firestore, "history", foodname), newValues);
+      await setDoc(doc(firestore, "history", dateTimeFormat), newValues);
       alert('Nutritional information updated and added to history.');
     } catch (error) {
       console.error('Error updating history:', error);
@@ -80,8 +96,8 @@ export default function HomeScreen() {
       </View>
       {Object.entries(nutritionalInfo).map(([key, value]) => (
         <View key={key} style={styles.row}>
-          <Text style={styles.cell}>{key}</Text>
-          <Text style={styles.cell}>{value}</Text>
+          <Text style={[styles.cell, styles.leftAlign]}>{key}:</Text>
+          <Text style={[styles.cell, styles.rightAlign]}>{value}</Text>
         </View>
       ))}
           {<View style={styles.table}>
