@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { styles } from '../Styles';
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { format } from 'date-fns'; // Make sure to install date-fns if not already installed using npm install date-fns
+
 
 // import { firebaseConfig } from '../firebaseConfig'; // Your Firebase configuration
 
@@ -60,7 +61,22 @@ export default function HomeScreen() {
     }
   };
 
-  const handleRefreshPress = async () => {
+  const handleSave = async () => {
+    try {
+      await setDoc(doc(firestore, "current", "food"), {
+        foodname: foodname,
+        mass: parseInt(mass)  // Convert back to number before saving
+      });
+      alert('Food information updated successfully.');
+      fetchData();  // Update data
+    } catch (error) {
+      console.error('Error saving food information:', error);
+    }
+    //call handleUpdatePress
+    handleUpdatePress();
+  };
+
+  const handleUpdatePress = async () => {
     const newValues = Object.keys(nutritionalInfo).reduce((acc, key) => {
       if (typeof nutritionalInfo[key] === 'number') {
         acc[key] = (nutritionalInfo[key] * mass) / 1000;
@@ -90,10 +106,31 @@ export default function HomeScreen() {
         <TouchableOpacity onPress={() => alert('Food modification to be added in a future patch')} style={styles.modifybutton}>
           <Text style={styles.modifybuttonText}>✎ Edit Food</Text>
         </TouchableOpacity>
-        <TouchableOpacity onPress={handleRefreshPress} style={styles.modifybutton}>
-          <Text style={styles.modifybuttonText}>⟳ Refresh</Text>
+        <TouchableOpacity onPress={handleUpdatePress} style={styles.modifybutton}>
+          <Text style={styles.modifybuttonText}>⟳ Update</Text>
         </TouchableOpacity>
       </View>
+
+      {/* <Text style={styles.name}>Edit Food Information</Text> */}
+      <TextInput
+        style={styles.input}
+        onChangeText={setFood}
+        value={foodname}
+        placeholder="Enter food name, first letter capitalized"
+      />
+      <TextInput
+        style={styles.input}
+        onChangeText={setMass}
+        value={mass}
+        keyboardType="numeric"
+        placeholder="Enter mass"
+      />
+      <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
+        <Text style={styles.saveButtonText}>Save Changes</Text>
+      </TouchableOpacity>
+
+
+
       {Object.entries(nutritionalInfo).map(([key, value]) => (
         <View key={key} style={styles.row}>
           <Text style={[styles.cell, styles.leftAlign]}>{key}:</Text>

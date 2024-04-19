@@ -133,5 +133,23 @@ export const styles = StyleSheet.create({
     rightAlign: {
         textAlign: 'right',
     },
+    input: {
+        height: 40,
+        margin: 12,
+        borderWidth: 1,
+        padding: 10,
+        width: '90%',
+        alignSelf: 'center'
+      },
+      saveButton: {
+        backgroundColor: 'blue',
+        padding: 10,
+        margin: 10,
+        borderRadius: 5
+      },
+      saveButtonText: {
+        color: 'white',
+        textAlign: 'center'
+      },
 
 });
