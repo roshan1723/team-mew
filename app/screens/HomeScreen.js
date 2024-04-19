@@ -61,7 +61,7 @@ export default function HomeScreen() {
     }
   };
 
-  const handleSave = async () => {
+  const handleModify = async () => {
     try {
       await setDoc(doc(firestore, "current", "food"), {
         foodname: foodname,
@@ -103,7 +103,7 @@ export default function HomeScreen() {
     <View style={styles.summary}>
       {foodname ? <Text style={styles.name}>Food: {foodname}</Text> : <Text style={styles.name}>No food identified</Text>}
       <View style={styles.buttonRow}>
-        <TouchableOpacity onPress={() => alert('Food modification to be added in a future patch')} style={styles.modifybutton}>
+        <TouchableOpacity onPress={handleModify} style={styles.modifybutton}>
           <Text style={styles.modifybuttonText}>✎ Edit Food</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleUpdatePress} style={styles.modifybutton}>
@@ -125,9 +125,9 @@ export default function HomeScreen() {
         keyboardType="numeric"
         placeholder="Enter mass"
       />
-      <TouchableOpacity onPress={handleSave} style={styles.saveButton}>
+      {/* <TouchableOpacity onPress={handleModify} style={styles.saveButton}>
         <Text style={styles.saveButtonText}>Save Changes</Text>
-      </TouchableOpacity>
+      </TouchableOpacity> */}
 
 
 

@@ -143,15 +143,15 @@ export const styles = StyleSheet.create({
         width: '90%',
         alignSelf: 'center'
       },
-      saveButton: {
-        backgroundColor: 'blue',
-        padding: 10,
-        margin: 10,
-        borderRadius: 5
-      },
-      saveButtonText: {
-        color: 'white',
-        textAlign: 'center'
-      },
+    //   saveButton: {
+    //     // backgroundColor: 'blue',
+    //     padding: 10,
+    //     margin: 10,
+    //     borderRadius: 5
+    //   },
+    //   saveButtonText: {
+    //     // color: 'white',
+    //     textAlign: 'center'
+    //   },
 
 });
