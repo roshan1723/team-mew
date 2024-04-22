@@ -60,10 +60,11 @@ export const styles = StyleSheet.create({
         
     },
     entryContainer: {
-        marginBottom: 10,
+        marginBottom: 5,
         borderWidth: 1,
         borderRadius: 5,
         padding: 10,
+        paddingVertical: 12,
         backgroundColor: '#AFAFAF',
     },
     reportRow: {
@@ -82,11 +83,13 @@ export const styles = StyleSheet.create({
         marginTop: 2,
         fontWeight: '800',
         color: '#500000',
+        fontSize: 18,
     },
     reportValueTime: {
         marginTop: 2,
         fontWeight: '400',
         color: '#500000',
+        fontSize: 16,
     },
 
     nutritionalInfoContainer: {
