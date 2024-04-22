@@ -52,7 +52,7 @@ const HistoryEntry = () => {
               <Text style={styles.reportValue}>{item.FoodName}</Text>
             </View>
             <View style={styles.reportCell}>
-              <Text style={styles.reportValue}>{item.mass}</Text>
+              <Text style={styles.reportValue}>{item.mass}g</Text>
             </View>
             <View style={styles.reportCell}>
               <Text style={styles.reportValueTime}>{item.id}</Text>
