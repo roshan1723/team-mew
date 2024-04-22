@@ -1,9 +1,10 @@
 import * as React from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
 import { styles } from '../Styles';
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
+import { getFirestore, doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
 import { format } from 'date-fns'; // Make sure to install date-fns if not already installed using npm install date-fns
 
 
@@ -32,6 +33,25 @@ export default function HomeScreen() {
   React.useEffect(() => {
     fetchData();
   }, []);
+
+  useEffect(() => {
+    const unsubscribe = onSnapshot(doc(firestore, "current", "food"), (doc) => {
+      if (doc.exists()) {
+        const data = doc.data();
+        setFood(data.foodname);
+        setMass(data.mass.toString());  // Assuming mass is a number and needs to be converted to string for TextInput
+        console.log("subscribe: Data updated from Firestore");
+        handleUpdatePress();
+      } else {
+        console.log("subscribe: No such document!");
+      }
+    }, (error) => {
+      console.error("subscribe: Error fetching data: ", error);
+    });
+
+    return () => unsubscribe();  // This will unsubscribe from the document when the component unmounts
+  }, []);
+
 
   const fetchData = async () => {
     try {
