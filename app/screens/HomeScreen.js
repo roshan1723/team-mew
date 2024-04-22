@@ -46,7 +46,7 @@ export default function HomeScreen() {
         //CASE SENSITIVE
         setFood(data.foodname);
         setMass(data.mass);
-        const nutritionRef = doc(firestore, "nutritionalinfo", data.foodname);
+        const nutritionRef = doc(firestore, "nutritionalinfo", data.foodname.toLowerCase());
         const nutritionDoc = await getDoc(nutritionRef);
         if (nutritionDoc.exists()) {
           setNutritionalInfo(nutritionDoc.data());

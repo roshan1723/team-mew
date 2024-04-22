@@ -48,7 +48,7 @@ const AddValues = () => {
   useEffect(() => {
     const addData = async () => {
       for (const food of foods) {
-        const docRef = doc(firestore, "nutritionalinfo", food.FoodName);
+        const docRef = doc(firestore, "nutritionalinfo", food.FoodName.toLowerCase());
         try {
           await setDoc(docRef, food);
           console.log(`Document written for ${food.FoodName}`);
