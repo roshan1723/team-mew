@@ -89,7 +89,7 @@ export default function HomeScreen() {
     try {
       // Format the current date and time
       const now = new Date();
-      const dateTimeFormat = format(now, 'M-d-H-mm-ss'); // 'H-mm-ss' represents hours, minutes, and seconds with hyphens
+      const dateTimeFormat = format(now, 'M-dd-HH-mm-ss'); // 'H-mm-ss' represents hours, minutes, and seconds with hyphens
 
       // Add the new calculated data to the 'history' collection
       await setDoc(doc(firestore, "history", dateTimeFormat), newValues);
