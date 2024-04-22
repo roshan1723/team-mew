@@ -111,7 +111,6 @@ export default function HomeScreen() {
         </TouchableOpacity>
       </View>
 
-      {/* <Text style={styles.name}>Edit Food Information</Text> */}
       <TextInput
         style={styles.input}
         onChangeText={setFood}
@@ -125,72 +124,51 @@ export default function HomeScreen() {
         keyboardType="numeric"
         placeholder="Enter mass"
       />
-      {/* <TouchableOpacity onPress={handleModify} style={styles.saveButton}>
-        <Text style={styles.saveButtonText}>Save Changes</Text>
-      </TouchableOpacity> */}
 
-
-
-      {Object.entries(nutritionalInfo).map(([key, value]) => (
-        <View key={key} style={styles.row}>
-          <Text style={[styles.cell, styles.leftAlign]}>{key}:</Text>
-          <Text style={[styles.cell, styles.rightAlign]}>{value}</Text>
-        </View>
-      ))}
-          {<View style={styles.table}>
+      <View style={styles.table}>
         <View style={styles.row}>
           <Text style={styles.cell}>Calories</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Total Fat</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Saturated Fat</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Trans Fat</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Cholesterol</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Sodium</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Total Carbs</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Fiber</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Total Sugars</Text>
-          <Text style={styles.cell}>0</Text>
+          <Text style={styles.cell}>{nutritionalInfo.Calories}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.cell}>Protein</Text>
-          <Text style={styles.cell}>0</Text>
+          <Text style={styles.cell}>{nutritionalInfo.Protein}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.cell}>Carbohydrates</Text>
+          <Text style={styles.cell}>{nutritionalInfo.Tot_Carbs}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.cell}>Sodium</Text>
+          <Text style={styles.cell}>{nutritionalInfo.Sodium}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.cell}>Total Fat</Text>
+          <Text style={styles.cell}>{nutritionalInfo.Tot_Fat}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.cell}>Sugar</Text>
+          <Text style={styles.cell}>{nutritionalInfo.Tot_Sugar}</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.cell}>Fiber</Text>
+          <Text style={styles.cell}>{nutritionalInfo.Fiber}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.cell}>Calcium</Text>
-          <Text style={styles.cell}>0</Text>
+          <Text style={styles.cell}>{nutritionalInfo.Calcium}</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.cell}>Iron</Text>
-          <Text style={styles.cell}>0</Text>
+          <Text style={styles.cell}>{nutritionalInfo.Iron}</Text>
         </View>
-        <View style={styles.rowEnd}>
-          <Text style={styles.cell}>Potassium</Text>
-          <Text style={styles.cell}>0</Text>
+        <View style={styles.row}>
+          <Text style={styles.cell}>Saturated Fat</Text>
+          <Text style={styles.cell}>{nutritionalInfo.Sat_Fat}</Text>
         </View>
-      </View> }
+
+
+      </View>
     </View>
 
     
