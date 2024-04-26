@@ -89,7 +89,7 @@ export const styles = StyleSheet.create({
         marginTop: 2,
         fontWeight: '400',
         color: '#500000',
-        fontSize: 16,
+        fontSize: 14,
     },
 
     nutritionalInfoContainer: {

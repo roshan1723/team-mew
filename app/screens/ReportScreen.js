@@ -53,7 +53,7 @@ const HistoryEntry = () => {
     try {
       await deleteDoc(doc(firestore, 'history', itemId));
       fetchHistoryData(); // Refresh the list after deleting
-      Alert.alert('Delete Successful', 'The history item has been deleted.');
+      Alert.alert('Delete Successful', 'The item has been deleted.');
     } catch (error) {
       Alert.alert('Error', 'Failed to delete the history item.');
       console.error('Error deleting history item:', error);
@@ -76,7 +76,7 @@ const HistoryEntry = () => {
               <Text style={styles.reportValueTime}>{item.id}</Text>
             </View>
             <TouchableOpacity onPress={() => handleDelete(item.id)} style={styles.deleteButton}>
-              <Text style={styles.deleteButtonText}>Delete</Text>
+              <Text style={styles.deleteButtonText}>✖</Text>
             </TouchableOpacity>
           </View>
           {expandedItem === item.id && (
