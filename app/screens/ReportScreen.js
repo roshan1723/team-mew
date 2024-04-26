@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert } from 'react-native';
 import { styles } from '../Styles';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBhbabwCfGqORtZBuJ-so5tPaT2n1V6ekM",
@@ -23,23 +23,32 @@ const HistoryEntry = () => {
   const [historyData, setHistoryData] = React.useState([]);
 
   React.useEffect(() => {
-    const fetchHistoryData = async () => {
-      try {
-        const querySnapshot = await getDocs(collection(firestore, 'history'));
-        const historyItems = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-        setHistoryData(historyItems.reverse());
-      } catch (error) {
-        console.error('Error fetching history:', error);
-      }
-    };
-
     fetchHistoryData();
-
-    return () => {}; 
   }, []);
+
+  const fetchHistoryData = async () => {
+    try {
+      const querySnapshot = await getDocs(collection(firestore, 'history'));
+      const historyItems = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setHistoryData(historyItems.reverse());
+    } catch (error) {
+      console.error('Error fetching history:', error);
+    }
+  };
 
   const toggleExpanded = (itemId) => {
     setExpandedItem(itemId === expandedItem ? null : itemId);
+  };
+
+  const handleDelete = async (itemId) => {
+    try {
+      await deleteDoc(doc(firestore, 'history', itemId));
+      fetchHistoryData(); // Refresh the list after deleting
+      Alert.alert('Delete Successful', 'The history item has been deleted.');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to delete the history item.');
+      console.error('Error deleting history item:', error);
+    }
   };
 
   return (
@@ -57,6 +66,9 @@ const HistoryEntry = () => {
             <View style={styles.reportCell}>
               <Text style={styles.reportValueTime}>{item.id}</Text>
             </View>
+            <TouchableOpacity onPress={() => handleDelete(item.id)} style={styles.deleteButton}>
+              <Text style={styles.deleteButtonText}>Delete</Text>
+            </TouchableOpacity>
           </View>
           {expandedItem === item.id && (
             <View style={styles.reportRow}>
