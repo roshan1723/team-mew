@@ -92,7 +92,7 @@ const HistoryEntry = () => {
               </View>
               <View style={styles.tableRow}>
                 <Text style={[styles.reportDetails, styles.column]}>Protein</Text>
-                <Text style={[styles.reportDetails, styles.column]}>{item.Protein.toFixed(2)} g</Text>
+                <Text style={[styles.reportDetails, styles.column]}>{parseFloat(item.Protein.toFixed(2))} g</Text>
               </View>
               <View style={styles.tableRow}>
                 <Text style={[styles.reportDetails, styles.column]}>Carbohydrates</Text>

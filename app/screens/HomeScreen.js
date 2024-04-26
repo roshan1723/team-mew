@@ -185,39 +185,39 @@ export default function HomeScreen() {
         </View>
         <View style={styles.row}>
           <Text style={styles.cell}>Protein</Text>
-          <Text style={styles.cell}>{nutritionalInfo.Protein.toFixed(2)} g</Text>
+          <Text style={styles.cell}>{parseFloat((nutritionalInfo.Protein*1).toFixed(2))} g</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.cell}>Carbohydrates</Text>
-          <Text style={styles.cell}>{nutritionalInfo.Tot_Carbs.toFixed(2)} g</Text>
+          <Text style={styles.cell}>{parseFloat((nutritionalInfo.Tot_Carbs*1).toFixed(2))} g</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.cell}>Sodium</Text>
-          <Text style={styles.cell}>{((nutritionalInfo.Sodium)*(1000)).toFixed(2)} mg</Text>
+          <Text style={styles.cell}>{parseFloat((nutritionalInfo.Sodium*1000).toFixed(2))} mg</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.cell}>Total Fat</Text>
-          <Text style={styles.cell}>{((nutritionalInfo.Tot_Fat)*1000).toFixed(2)} mg</Text>
+          <Text style={styles.cell}>{parseFloat((nutritionalInfo.Tot_Fat*1000).toFixed(2))} mg</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.cell}>Sugar</Text>
-          <Text style={styles.cell}>{nutritionalInfo.Tot_Sugar.toFixed(2)} g</Text>
+          <Text style={styles.cell}>{parseFloat((nutritionalInfo.Tot_Sugar*1).toFixed(2))} g</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.cell}>Fiber</Text>
-          <Text style={styles.cell}>{nutritionalInfo.Fiber.toFixed(2)} g</Text>
+          <Text style={styles.cell}>{parseFloat((nutritionalInfo.Fiber*1).toFixed(2))} g</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.cell}>Calcium</Text>
-          <Text style={styles.cell}>{((nutritionalInfo.Calcium)*(1000).toFixed(2))} mg</Text>
+          <Text style={styles.cell}>{parseFloat((nutritionalInfo.Calcium*1000).toFixed(2))} mg</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.cell}>Iron</Text>
-          <Text style={styles.cell}>{((nutritionalInfo.Iron)*(1000000)).toFixed(2)} µg</Text>
+          <Text style={styles.cell}>{parseFloat((nutritionalInfo.Iron*1000000).toFixed(2))} µg</Text>
         </View>
         <View style={styles.row}>
           <Text style={styles.cell}>Saturated Fat</Text>
-          <Text style={styles.cell}>{((nutritionalInfo.Sat_Fat)*(1000).toFixed(2))} mg</Text>
+          <Text style={styles.cell}>{parseFloat((nutritionalInfo.Sat_Fat*1000).toFixed(2))} mg</Text>
         </View>
 
 
