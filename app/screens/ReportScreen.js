@@ -2,7 +2,7 @@ import * as React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert } from 'react-native';
 import { styles } from '../Styles';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, collection, getDocs, doc, deleteDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs, doc, deleteDoc, onSnapshot } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBhbabwCfGqORtZBuJ-so5tPaT2n1V6ekM",
@@ -24,6 +24,14 @@ const HistoryEntry = () => {
 
   React.useEffect(() => {
     fetchHistoryData();
+
+    const unsubscribe = onSnapshot(doc(firestore, 'current', 'food'), (doc) => {
+      // You can add additional logic here if you want to do something with the food document
+      console.log('Current food document updated:', doc.data());
+      fetchHistoryData(); // Refresh history data on any change in the food document
+    });
+
+    return () => unsubscribe();  // Clean up the subscription
   }, []);
 
   const fetchHistoryData = async () => {
