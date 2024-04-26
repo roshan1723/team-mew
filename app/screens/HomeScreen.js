@@ -35,6 +35,13 @@ export default function HomeScreen() {
     fetchData();
   }, []);
 
+  // useEffect(() => {
+  //   if (foodname && mass && Object.keys(nutritionalInfo).length > 0) {
+  //     console.log("Triggering update after data is set.");
+  //     handleUpdatePress();
+  //   }
+  // }, [foodname, mass, nutritionalInfo]);
+
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(firestore, "current", "food"), (doc) => {
       if (doc.exists()) {
@@ -42,7 +49,6 @@ export default function HomeScreen() {
         setFood(data.foodname);
         setMass(data.mass.toString());  // Assuming mass is a number and needs to be converted to string for TextInputy
         console.log("subscribe: Data updated from Firestore");
-        
         // handleUpdatePress();
         
       } else {
@@ -129,6 +135,10 @@ export default function HomeScreen() {
     }
   };
 
+  const handleRefresh = async () => {
+    fetchData();
+  };
+
   return (
     <View style={styles.summary}>
       {foodname ? <Text style={styles.name}>Food: {foodname}</Text> : <Text style={styles.name}>No food identified</Text>}
@@ -137,7 +147,10 @@ export default function HomeScreen() {
           <Text style={styles.modifybuttonText}>✎ Edit Food</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleUpdatePress} style={styles.modifybutton}>
-          <Text style={styles.modifybuttonText}>⟳ Update</Text>
+          <Text style={styles.modifybuttonText}> Update</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleRefresh} style={styles.modifybutton}>
+          <Text style={styles.modifybuttonText}>⟳ Refresh</Text>
         </TouchableOpacity>
       </View>
 
@@ -169,62 +182,6 @@ export default function HomeScreen() {
       ))}
       
 
-
-
-          {/* {<View style={styles.table}>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Calories</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Total Fat</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Saturated Fat</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Trans Fat</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Cholesterol</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Sodium</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Total Carbs</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Fiber</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Total Sugars</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Protein</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Calcium</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.row}>
-          <Text style={styles.cell}>Iron</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-        <View style={styles.rowEnd}>
-          <Text style={styles.cell}>Potassium</Text>
-          <Text style={styles.cell}>0</Text>
-        </View>
-      </View> } */}
     </View>
 
     
