@@ -141,7 +141,7 @@ export default function HomeScreen() {
 
   return (
     <View style={styles.summary}>
-      {foodname ? <Text style={styles.name}>Food: {foodname}</Text> : <Text style={styles.name}>No food identified</Text>}
+      {foodname ? <Text style={styles.name}>{foodname}</Text> : <Text style={styles.name}>No food identified</Text>}
       <View style={styles.buttonRow}>
         <TouchableOpacity onPress={handleModify} style={styles.modifybutton}>
           <Text style={styles.modifybuttonText}>✎ Edit Food</Text>
@@ -174,12 +174,50 @@ export default function HomeScreen() {
 
 
 
-      {Object.entries(nutritionalInfo).map(([key, value]) => (
-        <View key={key} style={styles.row}>
-          <Text style={[styles.cell, styles.leftAlign]}>{key}:</Text>
-          <Text style={[styles.cell, styles.rightAlign]}>{value}</Text>
+<View style={styles.table}>
+        <View style={styles.row}>
+          <Text style={styles.cell}>Calories</Text>
+          <Text style={styles.cell}>{nutritionalInfo.Calories}</Text>
         </View>
-      ))}
+        <View style={styles.row}>
+          <Text style={styles.cell}>Protein</Text>
+          <Text style={styles.cell}>{nutritionalInfo.Protein.toFixed(2)} g</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.cell}>Carbohydrates</Text>
+          <Text style={styles.cell}>{nutritionalInfo.Tot_Carbs.toFixed(2)} g</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.cell}>Sodium</Text>
+          <Text style={styles.cell}>{((nutritionalInfo.Sodium)*(1000)).toFixed(2)} mg</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.cell}>Total Fat</Text>
+          <Text style={styles.cell}>{((nutritionalInfo.Tot_Fat)*1000).toFixed(2)} mg</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.cell}>Sugar</Text>
+          <Text style={styles.cell}>{nutritionalInfo.Tot_Sugar.toFixed(2)} g</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.cell}>Fiber</Text>
+          <Text style={styles.cell}>{nutritionalInfo.Fiber.toFixed(2)} g</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.cell}>Calcium</Text>
+          <Text style={styles.cell}>{((nutritionalInfo.Calcium)*(1000).toFixed(2))} mg</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.cell}>Iron</Text>
+          <Text style={styles.cell}>{((nutritionalInfo.Iron)*(1000000)).toFixed(2)} µg</Text>
+        </View>
+        <View style={styles.row}>
+          <Text style={styles.cell}>Saturated Fat</Text>
+          <Text style={styles.cell}>{((nutritionalInfo.Sat_Fat)*(1000).toFixed(2))} mg</Text>
+        </View>
+
+
+      </View>
       
 
     </View>

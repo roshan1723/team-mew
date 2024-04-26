@@ -21,7 +21,7 @@ export const styles = StyleSheet.create({
         color: '#500000',
     },
     table: {
-        marginTop:30,
+        marginTop:'6%',
         flex:1,
         width: '100%'
     },
