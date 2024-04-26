@@ -73,7 +73,7 @@ export default function HomeScreen() {
 
         
         //CASE SENSITIVE
-        setFood(data.foodname);
+        setFood(capitalizeFirstLetter(data.foodname));
         setMass(data.mass);
         const nutritionRef = doc(firestore, "nutritionalinfo", data.foodname.toLowerCase());
         const nutritionDoc = await getDoc(nutritionRef);
@@ -137,6 +137,10 @@ export default function HomeScreen() {
 
   const handleRefresh = async () => {
     fetchData();
+  };
+
+  const capitalizeFirstLetter = (string) => {
+    return string.charAt(0).toUpperCase() + string.slice(1);
   };
 
   return (
