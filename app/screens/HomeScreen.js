@@ -28,6 +28,7 @@ export default function HomeScreen() {
   const [foodname, setFood] = React.useState(null);
   const [mass, setMass] = React.useState(0);
   const [nutritionalInfo, setNutritionalInfo] = React.useState({});
+  // const [newValues, setNewValues] = useState({});
 
   console.log("started homescreen");
   React.useEffect(() => {
@@ -39,10 +40,10 @@ export default function HomeScreen() {
       if (doc.exists()) {
         const data = doc.data();
         setFood(data.foodname);
-        setMass(data.mass.toString());  // Assuming mass is a number and needs to be converted to string for TextInput
+        setMass(data.mass.toString());  // Assuming mass is a number and needs to be converted to string for TextInputy
         console.log("subscribe: Data updated from Firestore");
         
-        handleUpdatePress();
+        // handleUpdatePress();
         
       } else {
         console.log("subscribe: No such document!");
@@ -71,9 +72,11 @@ export default function HomeScreen() {
         const nutritionRef = doc(firestore, "nutritionalinfo", data.foodname.toLowerCase());
         const nutritionDoc = await getDoc(nutritionRef);
         if (nutritionDoc.exists()) {
-          setNutritionalInfo(nutritionDoc.data());
-          console.log("nutritional info fetched: ");
-          console.log(nutritionDoc.data());
+          const nutritionalData = nutritionDoc.data();
+          // console.log("nutritional info fetched: ");
+          // console.log(nutritionDoc.data());
+          const scaledData = scaleNutritionalValues(nutritionalData, data.mass);
+          setNutritionalInfo(scaledData);
         } else {
           console.error("couldnt find current : ", data.foodname);
         }
@@ -81,6 +84,17 @@ export default function HomeScreen() {
     } catch (error) {
       console.error('Error fetching data:', error);
     }
+  };
+
+  const scaleNutritionalValues = (nutritionData, mass) => {
+    return Object.keys(nutritionData).reduce((acc, key) => {
+      if (typeof nutritionData[key] === 'number') {
+        acc[key] = (nutritionData[key] * mass) / 1000;
+      } else {
+        acc[key] = nutritionData[key];
+      }
+      return acc;
+    }, {});
   };
 
   const handleModify = async () => {
@@ -99,22 +113,16 @@ export default function HomeScreen() {
   };
 
   const handleUpdatePress = async () => {
-    const newValues = Object.keys(nutritionalInfo).reduce((acc, key) => {
-      if (typeof nutritionalInfo[key] === 'number') {
-        acc[key] = (nutritionalInfo[key] * mass) / 1000;
-      } else {
-        acc[key] = nutritionalInfo[key];
-      }
-      return acc;
-    }, {});
 
     try {
       // Format the current date and time
+      console.log("updating history");
+      console.log(nutritionalInfo);
       const now = new Date();
       const dateTimeFormat = format(now, 'M-dd-HH-mm-ss'); // 'H-mm-ss' represents hours, minutes, and seconds with hyphens
 
       // Add the new calculated data to the 'history' collection
-      await setDoc(doc(firestore, "history", dateTimeFormat), newValues);
+      await setDoc(doc(firestore, "history", dateTimeFormat), nutritionalInfo);
       alert('Nutritional information updated and added to history.');
     } catch (error) {
       console.error('Error updating history:', error);
@@ -159,7 +167,11 @@ export default function HomeScreen() {
           <Text style={[styles.cell, styles.rightAlign]}>{value}</Text>
         </View>
       ))}
-          {<View style={styles.table}>
+      
+
+
+
+          {/* {<View style={styles.table}>
         <View style={styles.row}>
           <Text style={styles.cell}>Calories</Text>
           <Text style={styles.cell}>0</Text>
@@ -212,7 +224,7 @@ export default function HomeScreen() {
           <Text style={styles.cell}>Potassium</Text>
           <Text style={styles.cell}>0</Text>
         </View>
-      </View> }
+      </View> } */}
     </View>
 
     
