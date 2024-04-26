@@ -25,9 +25,10 @@ const HistoryEntry = () => {
   React.useEffect(() => {
     fetchHistoryData();
 
-    const unsubscribe = onSnapshot(doc(firestore, 'current', 'food'), (doc) => {
-      // You can add additional logic here if you want to do something with the food document
-      console.log('Current food document updated:', doc.data());
+    // const unsubscribe = onSnapshot(doc(firestore, 'current', 'food'), (doc) => {
+    const unsubscribe = onSnapshot(collection(firestore, 'history'), (querySnapshot) => {
+      //add additional logic if want to do something with the food document
+      // console.log('Current food document updated:', doc.data());
       fetchHistoryData(); // Refresh history data on any change in the food document
     });
 
