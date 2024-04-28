@@ -14,6 +14,7 @@ import FontAwesome from '@expo/vector-icons/FontAwesome';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
 import AddValues from './screens/AddValues';
+import Meals from './screens/Meals';
 
 const firebaseConfig = {
   apiKey: "AIzaSyBhbabwCfGqORtZBuJ-so5tPaT2n1V6ekM",
@@ -41,6 +42,8 @@ export default function App() {
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="home" color={color} />,}}/>
         <Tab.Screen name="History" component={ReportScreen} options={{
           tabBarIcon: ({ color }) => <FontAwesome size={28} name="history" color={color} />,}}/>
+        <Tab.Screen name="Meals" component={Meals} options={{
+          tabBarIcon: ({ color }) => <FontAwesome size={28} name="meals" color={color} />,}}/>  
         {/* <Tab.Screen name="AddValues" component={AddValues}></Tab.Screen> */}
       </Tab.Navigator>
     </NavigationContainer>

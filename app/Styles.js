@@ -156,5 +156,7 @@ export const styles = StyleSheet.create({
     //     // color: 'white',
     //     textAlign: 'center'
     //   },
-
+    selectedItem: {
+        backgroundColor: '#fff', // Darker or any indication for selected items
+    }
 });
