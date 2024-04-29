@@ -99,14 +99,54 @@ const Meals = () => {
           <TouchableOpacity onPress={() => toggleExpandedMeal(item.id)} style={styles.entryContainer}>
             <Text style={styles.itemText}>{item.title || 'Meal at ' + new Date(item.timestamp?.seconds * 1000).toLocaleTimeString()}</Text>
             {expandedMeal === item.id && (
-              <View style={styles.nutritionalInfoContainer}>
-                {Object.keys(item).filter(key => key !== 'title' && key !== 'id' && key !== 'timestamp').map(key => (
-                  <View style={styles.tableRow} key={key}>
-                    <Text style={styles.reportDetails}>{key}</Text>
-                    <Text style={styles.reportDetails}>{item[key]}</Text>
-                  </View>
-                ))}
-              </View>
+                <View style={styles.reportRow}>
+                <View style={styles.nutritionalInfoContainer}>
+                    <View style={styles.tableRow}>
+                    <Text style={[styles.reportHeader, styles.column]}>Category</Text>
+                    <Text style={[styles.reportHeader, styles.column]}>Amount</Text>
+                    </View>
+                    <View style={styles.tableRow}>
+                    <Text style={[styles.reportDetails, styles.column]}>Calories</Text>
+                    <Text style={[styles.reportDetails, styles.column]}>{parseFloat(item.Calories.toFixed(2))}</Text>
+                </View>
+                <View style={styles.tableRow}>
+                    <Text style={[styles.reportDetails, styles.column]}>Protein</Text>
+                    <Text style={[styles.reportDetails, styles.column]}>{parseFloat(item.Protein.toFixed(2))} g</Text>
+                </View>
+                <View style={styles.tableRow}>
+                    <Text style={[styles.reportDetails, styles.column]}>Carbohydrates</Text>
+                    <Text style={[styles.reportDetails, styles.column]}>{parseFloat(item.Tot_Carbs.toFixed(2))} g</Text>
+                </View>
+                <View style={styles.tableRow}>
+                    <Text style={[styles.reportDetails, styles.column]}>Sodium</Text>
+                    <Text style={[styles.reportDetails, styles.column]}>{parseFloat((item.Sodium*1000).toFixed(2))} mg</Text>
+                </View>
+                <View style={styles.tableRow}>
+                    <Text style={[styles.reportDetails, styles.column]}>Total Fat</Text>
+                    <Text style={[styles.reportDetails, styles.column]}>{parseFloat((item.Tot_Fat*1000).toFixed(2))} mg</Text>
+                </View>
+                <View style={styles.tableRow}>
+                    <Text style={[styles.reportDetails, styles.column]}>Sugar</Text>
+                    <Text style={[styles.reportDetails, styles.column]}>{parseFloat(item.Tot_Sugar.toFixed(2))} g</Text>
+                </View>
+                <View style={styles.tableRow}>
+                    <Text style={[styles.reportDetails, styles.column]}>Fiber</Text>
+                    <Text style={[styles.reportDetails, styles.column]}>{parseFloat(item.Fiber.toFixed(2))} g</Text>
+                </View>
+                <View style={styles.tableRow}>
+                    <Text style={[styles.reportDetails, styles.column]}>Calcium</Text>
+                    <Text style={[styles.reportDetails, styles.column]}>{parseFloat((item.Calcium*1000).toFixed(2))} mg</Text>
+                </View>
+                <View style={styles.tableRow}>
+                    <Text style={[styles.reportDetails, styles.column]}>Iron</Text>
+                    <Text style={[styles.reportDetails, styles.column]}>{parseFloat((item.Iron*1000000).toFixed(2))} µg</Text>
+                </View>
+                <View style={styles.tableRow}>
+                    <Text style={[styles.reportDetails, styles.column]}>Saturated Fat</Text>
+                    <Text style={[styles.reportDetails, styles.column]}>{parseFloat((item.Sat_Fat*1000).toFixed(2))} mg</Text>
+                </View>
+                </View>
+                </View>
             )}
           </TouchableOpacity>
         )}

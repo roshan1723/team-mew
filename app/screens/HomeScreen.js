@@ -26,7 +26,7 @@ const firestore = getFirestore(app);
 
 export default function HomeScreen() {
   const [foodname, setFood] = React.useState(null);
-  const [mass, setMass] = React.useState(0);
+  const [mass, setMass] = React.useState('0');
   const [nutritionalInfo, setNutritionalInfo] = React.useState({});
   // const [newValues, setNewValues] = useState({});
 
@@ -74,7 +74,7 @@ export default function HomeScreen() {
         
         //CASE SENSITIVE
         setFood(capitalizeFirstLetter(data.foodname));
-        setMass(data.mass);
+        setMass(data.mass.toString());
         const nutritionRef = doc(firestore, "nutritionalinfo", data.foodname.toLowerCase());
         const nutritionDoc = await getDoc(nutritionRef);
         if (nutritionDoc.exists()) {
@@ -104,16 +104,19 @@ export default function HomeScreen() {
   };
 
   const handleModify = async () => {
+    const newMass = parseFloat(mass);
+
     try {
       await setDoc(doc(firestore, "current", "food"), {
         foodname: foodname,
-        mass: parseInt(mass)  // Convert back to number before saving
+        mass: newMass  // Convert back to number before saving
       });
       alert('Food information updated successfully.');
+      setMass(newMass.toString());  // Convert back to string for TextInput
       fetchData();  // Update data
     } catch (error) {
       console.error('Error saving food information:', error);
-    }
+    } 
     //call handleUpdatePress
     // handleUpdatePress();
   };
@@ -154,7 +157,7 @@ export default function HomeScreen() {
           <Text style={styles.modifybuttonText}> Update</Text>
         </TouchableOpacity>
         <TouchableOpacity onPress={handleRefresh} style={styles.modifybutton}>
-          <Text style={styles.modifybuttonText}>⟳ Refresh</Text>
+          <Text style={styles.modifybuttonText}>  ⟳</Text>
         </TouchableOpacity>
       </View>
 
