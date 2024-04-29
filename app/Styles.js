@@ -53,6 +53,7 @@ export const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingLeft:10,
         backgroundColor: '#AFAFAF',
+        marginHorizontal: '%'
     },
     modifybuttonText: {
         fontSize: 24,
@@ -126,7 +127,8 @@ export const styles = StyleSheet.create({
     buttonRow: {
         flexDirection: 'row',
         justifyContent: 'space-around',
-        padding: 10
+        padding: 10,
+        marginTop: '-5%',
       },
       
 
@@ -144,7 +146,8 @@ export const styles = StyleSheet.create({
         borderWidth: 1,
         padding: 10,
         width: '90%',
-        alignSelf: 'center'
+        alignSelf: 'center',
+        marginVertical: '1%',
       },
     //   saveButton: {
     //     // backgroundColor: 'blue',
@@ -158,5 +161,8 @@ export const styles = StyleSheet.create({
     //   },
     selectedItem: {
         backgroundColor: '#fff', // Darker or any indication for selected items
+    },
+    refresh: {
+        //fontSize: 32,
     }
 });

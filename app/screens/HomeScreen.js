@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, TextInput } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert } from 'react-native';
 import { styles } from '../Styles';
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
@@ -84,7 +84,8 @@ export default function HomeScreen() {
           const scaledData = scaleNutritionalValues(nutritionalData, data.mass);
           setNutritionalInfo(scaledData);
         } else {
-          console.error("couldnt find current : ", data.foodname);
+          console.error("Invalid food type: ", data.foodname);
+          Alert.alert("There is no stored information about that food, please try again.")
         }
       }
     } catch (error) {
@@ -104,12 +105,11 @@ export default function HomeScreen() {
   };
 
   const handleModify = async () => {
-    const newMass = parseFloat(mass);
 
     try {
       await setDoc(doc(firestore, "current", "food"), {
-        foodname: foodname,
-        mass: newMass  // Convert back to number before saving
+        foodname: capitalizeFirstLetter(foodname),
+        mass: parseInt(mass)  // Convert back to number before saving
       });
       alert('Food information updated successfully.');
       setMass(newMass.toString());  // Convert back to string for TextInput
@@ -132,7 +132,7 @@ export default function HomeScreen() {
 
       // Add the new calculated data to the 'history' collection
       await setDoc(doc(firestore, "history", dateTimeFormat), nutritionalInfo);
-      alert('Nutritional information updated and added to history.');
+      alert('Nutritional information saved to history.');
     } catch (error) {
       console.error('Error updating history:', error);
     }
@@ -143,35 +143,29 @@ export default function HomeScreen() {
   };
 
   const capitalizeFirstLetter = (string) => {
-    return string.charAt(0).toUpperCase() + string.slice(1);
+    return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };
 
   return (
     <View style={styles.summary}>
-      {foodname ? <Text style={styles.name}>{foodname}</Text> : <Text style={styles.name}>No food identified</Text>}
-      <View style={styles.buttonRow}>
-        <TouchableOpacity onPress={handleModify} style={styles.modifybutton}>
-          <Text style={styles.modifybuttonText}>✎ Edit Food</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleUpdatePress} style={styles.modifybutton}>
-          <Text style={styles.modifybuttonText}> Update</Text>
-        </TouchableOpacity>
+      {foodname ? <Text style={styles.name}>{capitalizeFirstLetter(foodname)}</Text> : <Text style={styles.name}>No food identified</Text>}
+      
         <TouchableOpacity onPress={handleRefresh} style={styles.modifybutton}>
           <Text style={styles.modifybuttonText}>  ⟳</Text>
         </TouchableOpacity>
-      </View>
+        
 
       {/* <Text style={styles.name}>Edit Food Information</Text> */}
       <TextInput
         style={styles.input}
         onChangeText={setFood}
         value={foodname}
-        placeholder="Enter food name, first letter capitalized"
+        placeholder="Enter food name"
       />
       <TextInput
         style={styles.input}
         onChangeText={setMass}
-        value={mass}
+        value={mass.toString()}
         keyboardType="numeric"
         placeholder="Enter mass"
       />
@@ -179,6 +173,14 @@ export default function HomeScreen() {
         <Text style={styles.saveButtonText}>Save Changes</Text>
       </TouchableOpacity> */}
 
+        <View style={styles.buttonRow}>
+        <TouchableOpacity onPress={handleModify} style={styles.modifybutton}>
+          <Text style={styles.modifybuttonText}>✎ Edit</Text>
+        </TouchableOpacity>
+        <TouchableOpacity onPress={handleUpdatePress} style={styles.modifybutton}>
+          <Text style={styles.modifybuttonText}>↓ Save</Text>
+        </TouchableOpacity>
+        </View>
 
 
 <View style={styles.table}>
