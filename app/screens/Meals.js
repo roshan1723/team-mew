@@ -21,7 +21,7 @@ const Meals = () => {
     try {
       const querySnapshot = await getDocs(collection(firestore, 'history'));
       const items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setHistoryData(items);
+      setHistoryData(items.reverse());
     } catch (error) {
       console.error('Error fetching history:', error);
     }

@@ -112,7 +112,7 @@ export default function HomeScreen() {
         mass: parseInt(mass)  // Convert back to number before saving
       });
       alert('Food information updated successfully.');
-      setMass(newMass.toString());  // Convert back to string for TextInput
+      setMass(mass);  // Convert back to string for TextInput
       fetchData();  // Update data
     } catch (error) {
       console.error('Error saving food information:', error);
