@@ -164,12 +164,24 @@ export const styles = StyleSheet.create({
     },
     refresh: {
         //fontSize: 32,
-    }
+    },
+    deleteButtonText: {
+    color: '#fff',
+    fontSize: 16,
+  },
+  deleteButton: {
+    backgroundColor: '#d96666', // Match delete button color with HistoryEntry component
+    padding: 0,
+    borderRadius: 5,
+    marginLeft: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
 
 
 
     // Meals:
-    ,
+    
     selectedItem: {
         backgroundColor: '#ccc', // Updated to show selection clearly
     },
