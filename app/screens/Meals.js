@@ -6,7 +6,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, Button, Modal, TextInput } from 'react-native';
 import { styles } from '../Styles';
-import { getFirestore, collection, onSnapshot, doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { getFirestore, collection, onSnapshot, doc, deleteDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { format } from 'date-fns';
 
 const firestore = getFirestore();
@@ -70,6 +70,16 @@ const Meals = () => {
   //     console.error('Error fetching meals:', error);
   //   }
   // };
+
+  const handleDelete = async (mealId) => {
+    try {
+      await deleteDoc(doc(firestore, 'meals', mealId));
+      Alert.alert('Delete Successful', 'The meal has been deleted.');
+    } catch (error) {
+      Alert.alert('Error', 'Failed to delete the meal.');
+      console.error('Error deleting meal:', error);
+    }
+  };
 
   // Toggle selection of history item
   const toggleSelection = (id) => {
@@ -170,8 +180,15 @@ const Meals = () => {
         data={mealData}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => toggleExpandedMeal(item.id)} style={styles.entryContainer}>
-            <Text style={styles.reportValue}>{item.id}</Text>
-            <Text style={styles.reportValueTime}>{new Date(item.timestamp?.seconds * 1000).toLocaleDateString()}</Text>
+            <View style={styles.reportRow}>
+              <View style={styles.reportCell}>
+                <Text style={styles.reportValue}>{item.id}</Text>
+                <Text style={styles.reportValueTime}>{new Date(item.timestamp?.seconds * 1000).toLocaleDateString()}</Text>
+              </View>
+              <TouchableOpacity onPress={() => handleDelete(item.id)} style={styles.deleteButton}>
+                <Text style={styles.deleteButtonText}>✖</Text>
+              </TouchableOpacity>
+            </View>
             {expandedMeal === item.id && (
               <View style={styles.reportRow}>
                 <View style={styles.nutritionalInfoContainer}>
