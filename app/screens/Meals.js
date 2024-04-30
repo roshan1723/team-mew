@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, Button, Modal } from 'react-native';
 import { styles } from '../Styles';
-import { getFirestore, collection, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
 
 const firestore = getFirestore();
 
@@ -13,29 +13,26 @@ const Meals = () => {
   const [expandedMeal, setExpandedMeal] = useState(null);
 
   useEffect(() => {
-    fetchHistoryData();
-    fetchMealData();
+    // Setup real-time listeners for history and meals collections
+    const unsubscribeHistory = onSnapshot(collection(firestore, 'history'), (snapshot) => {
+      const updatedHistory = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setHistoryData(updatedHistory);
+    }, error => {
+      console.error('Error listening to history updates:', error);
+    });
+
+    const unsubscribeMeals = onSnapshot(collection(firestore, 'meals'), (snapshot) => {
+      const updatedMeals = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      setMealData(updatedMeals);
+    }, error => {
+      console.error('Error listening to meals updates:', error);
+    });
+
+    return () => {
+      unsubscribeHistory();
+      unsubscribeMeals();
+    };
   }, []);
-
-  const fetchHistoryData = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(firestore, 'history'));
-      const items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setHistoryData(items.reverse());
-    } catch (error) {
-      console.error('Error fetching history:', error);
-    }
-  };
-
-  const fetchMealData = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(firestore, 'meals'));
-      const meals = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setMealData(meals);
-    } catch (error) {
-      console.error('Error fetching meals:', error);
-    }
-  };
 
   const toggleSelection = (id) => {
     setSelectedIds(prev => ({
