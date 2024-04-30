@@ -27,41 +27,49 @@ const Meals = () => {
     }, error => {
       console.error('Error listening to history updates:', error);
     });
-
+  
     const unsubscribeMeals = onSnapshot(collection(firestore, 'meals'), (snapshot) => {
-      const updatedMeals = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })).reverse();
+      const updatedMeals = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }))
+                                        .sort((a, b) => a.timestamp - b.timestamp)
+                                        .reverse(); 
       setMealData(updatedMeals);
     }, error => {
       console.error('Error listening to meals updates:', error);
     });
-
+  
     return () => {
       unsubscribeHistory();
       unsubscribeMeals();
     };
   }, []);
+  
 
   // Fetch past data from Firestore database
-  const fetchHistoryData = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(firestore, 'history'));
-      const items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setHistoryData(items.reverse());
-    } catch (error) {
-      console.error('Error fetching history:', error);
-    }
-  };
+  // const fetchHistoryData = async () => {
+  //   try {
+  //     const querySnapshot = await getDocs(collection(firestore, 'history'));
+  //     const items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  //     setHistoryData(items.reverse());
+  //   } catch (error) {
+  //     console.error('Error fetching history:', error);
+  //   }
+  // };
 
-  // Fetch meal data from Firestore
-  const fetchMealData = async () => {
-    try {
-      const querySnapshot = await getDocs(collection(firestore, 'meals'));
-      const meals = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-      setMealData(meals);
-    } catch (error) {
-      console.error('Error fetching meals:', error);
-    }
-  };
+  // // Fetch meal data from Firestore and then sort by timestamp
+  // const fetchMealData = async () => {
+  //   try {
+  //     const querySnapshot = await getDocs(collection(firestore, 'meals'));
+  //     const meals = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  //     const sortedMeals = meals.sort((a, b) => {
+  //       const timestampA = new Date(a.timestamp.toDate());
+  //       const timestampB = new Date(b.timestamp.toDate());
+  //       return timestampB - timestampA;
+  //     });
+  //     setMealData(sortedMeals);
+  //   } catch (error) {
+  //     console.error('Error fetching meals:', error);
+  //   }
+  // };
 
   // Toggle selection of history item
   const toggleSelection = (id) => {
