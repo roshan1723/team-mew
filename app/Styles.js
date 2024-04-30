@@ -170,7 +170,7 @@ export const styles = StyleSheet.create({
     fontSize: 16,
   },
   deleteButton: {
-    backgroundColor: '#d96666', // Match delete button color with HistoryEntry component
+    //backgroundColor: '#d96666', // Match delete button color with HistoryEntry component
     padding: 0,
     borderRadius: 5,
     marginLeft: 10,
