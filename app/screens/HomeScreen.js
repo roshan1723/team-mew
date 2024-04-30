@@ -25,7 +25,7 @@ const app = initializeApp(firebaseConfig);
 const firestore = getFirestore(app);
 
 export default function HomeScreen() {
-  const [foodname, setFood] = React.useState(null);
+  const [foodname, setFood] = React.useState('');
   const [mass, setMass] = React.useState('0');
   const [nutritionalInfo, setNutritionalInfo] = React.useState({});
   // const [newValues, setNewValues] = useState({});

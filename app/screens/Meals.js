@@ -1,16 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, Button } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, Button, Modal } from 'react-native';
 import { styles } from '../Styles';
-import { initializeApp } from 'firebase/app';
 import { getFirestore, collection, getDocs, addDoc, serverTimestamp } from 'firebase/firestore';
 
-// Assume Firebase is initialized elsewhere if you are splitting across files
 const firestore = getFirestore();
 
 const Meals = () => {
   const [historyData, setHistoryData] = useState([]);
   const [mealData, setMealData] = useState([]);
   const [selectedIds, setSelectedIds] = useState({});
+  const [modalVisible, setModalVisible] = useState(false);
   const [expandedMeal, setExpandedMeal] = useState(null);
 
   useEffect(() => {
@@ -62,7 +61,8 @@ const Meals = () => {
         timestamp: serverTimestamp()
       });
       Alert.alert('Success', 'Meal created successfully');
-      setSelectedIds({}); // Clear selection after saving
+      setSelectedIds({});
+      setModalVisible(false);
     } catch (error) {
       Alert.alert('Error', 'Failed to create meal');
       console.error('Error creating meal:', error);
@@ -75,24 +75,34 @@ const Meals = () => {
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={historyData}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={[styles.item, selectedIds[item.id] ? styles.selectedItem : null]}
-            onPress={() => toggleSelection(item.id)}
-          >
-            <Text style={styles.itemText}>{item.FoodName} - {item.mass}g</Text>
-          </TouchableOpacity>
-        )}
-        keyExtractor={item => item.id}
-        ListHeaderComponent={
-          <>
-            <Button title="Confirm Selection" onPress={confirmSelection} />
-            <Text style={styles.header}>Meals</Text>
-          </>
-        }
-      />
+      <Button title="Create Meal" onPress={() => setModalVisible(true)} />
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.modalView}>
+          <Text style={styles.modalText}>Select History Items</Text>
+          <FlatList
+            data={historyData}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                style={[styles.item, selectedIds[item.id] ? styles.selectedItem : styles.item]}
+                onPress={() => toggleSelection(item.id)}
+              >
+                <Text style={styles.itemText}>{item.FoodName} - {item.mass}g</Text>
+              </TouchableOpacity>
+            )}
+            keyExtractor={item => item.id}
+          />
+          <Button title="Confirm Selection" onPress={confirmSelection} />
+          <Button title="Close" onPress={() => setModalVisible(false)} />
+        </View>
+      </Modal>
       <FlatList
         data={mealData}
         renderItem={({ item }) => (

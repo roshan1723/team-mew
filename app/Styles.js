@@ -165,4 +165,40 @@ export const styles = StyleSheet.create({
     refresh: {
         //fontSize: 32,
     }
+
+
+
+    // Meals:
+    ,
+    selectedItem: {
+        backgroundColor: '#ccc', // Updated to show selection clearly
+    },
+    modalView: {
+        margin: 20,
+        backgroundColor: "white",
+        borderRadius: 20,
+        padding: 35,
+        alignItems: "center",
+        shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        flex: 1,
+        justifyContent: 'center'
+    },
+    modalText: {
+        marginBottom: 15,
+        textAlign: "center",
+        fontSize: 20
+    },
+    modalButton: {
+        padding: 10,
+        marginVertical: 10,
+        backgroundColor: '#AFAFAF',
+        borderRadius: 5
+    },
 });
