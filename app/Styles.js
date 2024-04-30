@@ -178,7 +178,17 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 
-
+  createMealButton: {
+    width: 200, // Adjust width as needed
+    height: 50, // Adjust height as needed
+    fontSize: 20, // Adjust font size as needed
+    backgroundColor: '#AFAFAF', // Adjust background color as needed
+    borderRadius: 10, // Adjust border radius as needed
+},
+mealTabText: {
+    fontSize: 18, // Adjust font size as needed
+    color: '#500000', // Maroon color
+},
 
     // Meals:
     

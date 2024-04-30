@@ -4,7 +4,7 @@
  * It also displays existing meals with aggregated nutritional information.
  */
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, Button, Modal } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, Button, Modal, TextInput } from 'react-native';
 import { styles } from '../Styles';
 import { getFirestore, collection, onSnapshot, doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
 import { format } from 'date-fns';
@@ -17,6 +17,7 @@ const Meals = () => {
   const [selectedIds, setSelectedIds] = useState({});
   const [modalVisible, setModalVisible] = useState(false);
   const [expandedMeal, setExpandedMeal] = useState(null);
+  const [mealName, setMealName] = useState('');
 
   useEffect(() => {
     // Setup real-time listeners for history and meals collections
@@ -82,7 +83,11 @@ const Meals = () => {
       return acc;
     }, {});
 
-    const mealName = format(new Date(), 'M-dd-HH-mm-ss');
+    if (!mealName) {
+      Alert.alert('Error', 'Please enter a meal name');
+      return;
+    }
+
     try {
       await setDoc(doc(firestore, "meals", mealName), {
         ...aggregatedNutrients,
@@ -91,6 +96,7 @@ const Meals = () => {
       Alert.alert('Success', 'Meal created successfully');
       setSelectedIds({});
       setModalVisible(false);
+      setMealName('');
     } catch (error) {
       Alert.alert('Error', 'Failed to create meal');
       console.error('Error creating meal:', error);
@@ -104,64 +110,72 @@ const Meals = () => {
 
   return (
     <View style={styles.container}>
-      <Button title="Create Meal" onPress={() => setModalVisible(true)} />
+      <Button title="Create Meal" onPress={() => setModalVisible(true)} style={styles.createMealButton} />
       <Modal
-  animationType="slide"
-  transparent={true}
-  visible={modalVisible}
-  onRequestClose={() => {
-    Alert.alert("Modal has been closed.");
-    setModalVisible(!modalVisible);
-  }}
->
-  <View style={styles.modalContainer}>
-    <View style={styles.modalContent}>
-      <Text style={styles.modalHeaderText}>Select History Items</Text>
-      <FlatList
-        data={historyData}
-        renderItem={({ item }) => (
-          <TouchableOpacity
-            style={[
-              styles.item,
-              selectedIds[item.id] ? styles.selectedItem : null,
-            ]}
-            onPress={() => toggleSelection(item.id)}
-          >
-            <Text style={styles.itemText}>
-              {item.FoodName} - {item.mass}g
-            </Text>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item) => item.id}
-      />
-      <View style={styles.modalButtons}>
-        <Button
-          title="Confirm Selection"
-          onPress={confirmSelection}
-          disabled={!Object.keys(selectedIds).length}
-        />
-        <Button title="Close" onPress={() => setModalVisible(false)} />
-      </View>
-    </View>
-  </View>
-</Modal>
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert("Modal has been closed.");
+          setModalVisible(!modalVisible);
+        }}
+      >
+        <View style={styles.modalContainer}>
+          <View style={styles.modalContent}>
+            <Text style={styles.modalHeaderText}>Enter Meal Name:</Text>
+            <TextInput
+              style={styles.input}
+              onChangeText={text => setMealName(text)}
+              value={mealName}
+              placeholder="Enter meal name"
+            />
+            <Text style={styles.modalHeaderText}>Select History Items</Text>
+            <FlatList
+              data={historyData}
+              renderItem={({ item }) => (
+                <TouchableOpacity
+                  style={[
+                    styles.item,
+                    selectedIds[item.id] ? styles.selectedItem : null,
+                  ]}
+                  onPress={() => toggleSelection(item.id)}
+                >
+                  <Text style={styles.itemText}>
+                    {item.FoodName} - {item.mass}g
+                  </Text>
+                </TouchableOpacity>
+              )}
+              keyExtractor={(item) => item.id}
+            />
+            <View style={styles.modalButtons}>
+              <Button
+                title="Confirm Selection"
+                onPress={confirmSelection}
+                disabled={!Object.keys(selectedIds).length}
+              />
+              <Button title="Close" onPress={() => setModalVisible(false)} />
+            </View>
+          </View>
+        </View>
+      </Modal>
       <FlatList
         data={mealData}
         renderItem={({ item }) => (
           <TouchableOpacity onPress={() => toggleExpandedMeal(item.id)} style={styles.entryContainer}>
-            <Text style={styles.itemText}>{item.title || 'Meal at ' + new Date(item.timestamp?.seconds * 1000).toLocaleTimeString()}</Text>
+            <Text style={styles.reportValue}>{item.id}</Text>
+            <Text style={styles.reportValueTime}>{new Date(item.timestamp?.seconds * 1000).toLocaleDateString()}</Text>
             {expandedMeal === item.id && (
-                <View style={styles.reportRow}>
+              <View style={styles.reportRow}>
                 <View style={styles.nutritionalInfoContainer}>
-                    <View style={styles.tableRow}>
+                  <View style={styles.tableRow}>
                     <Text style={[styles.reportHeader, styles.column]}>Category</Text>
                     <Text style={[styles.reportHeader, styles.column]}>Amount</Text>
-                    </View>
-                    <View style={styles.tableRow}>
+                  </View>
+                  <View style={styles.tableRow}>
                     <Text style={[styles.reportDetails, styles.column]}>Calories</Text>
                     <Text style={[styles.reportDetails, styles.column]}>{parseFloat(item.Calories.toFixed(2))}</Text>
-                </View>
-                <View style={styles.tableRow}>
+                  </View>
+                  <View style={styles.tableRow}>
                     <Text style={[styles.reportDetails, styles.column]}>Protein</Text>
                     <Text style={[styles.reportDetails, styles.column]}>{parseFloat(item.Protein.toFixed(2))} g</Text>
                 </View>
@@ -198,7 +212,7 @@ const Meals = () => {
                     <Text style={[styles.reportDetails, styles.column]}>{parseFloat((item.Sat_Fat*1000).toFixed(2))} mg</Text>
                 </View>
                 </View>
-                </View>
+              </View>
             )}
           </TouchableOpacity>
         )}
