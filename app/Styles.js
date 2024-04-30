@@ -201,4 +201,43 @@ export const styles = StyleSheet.create({
         backgroundColor: '#AFAFAF',
         borderRadius: 5
     },
+    modalContainer: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        backgroundColor: "rgba(0, 0, 0, 0.5)",
+      },
+      modalContent: {
+        backgroundColor: '#fff',
+        padding: 20,
+        borderRadius: 10,
+        width: '90%', // Adjusted width
+        maxWidth: 400, // Maximum width to prevent stretching on larger screens
+        maxHeight: '80%', // Maximum height to prevent clipping
+      },
+      modalHeaderText: {
+        fontSize: 18,
+        fontWeight: "bold",
+        marginBottom: 10,
+        textAlign: "center",
+      },
+      modalButtons: {
+        marginTop: 20,
+        flexDirection: "row",
+        justifyContent: "space-between",
+      },
+      item: {
+        padding: 10,
+        marginVertical: 5,
+        borderWidth: 1,
+        borderColor: "#ccc",
+        borderRadius: 5,
+      },
+      selectedItem: {
+        backgroundColor: "#e6f2ff",
+        borderColor: "#99ccff",
+      },
+      itemText: {
+        fontSize: 16,
+      },
 });

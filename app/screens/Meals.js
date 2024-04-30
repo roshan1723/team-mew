@@ -106,32 +106,45 @@ const Meals = () => {
     <View style={styles.container}>
       <Button title="Create Meal" onPress={() => setModalVisible(true)} />
       <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.modalView}>
-          <Text style={styles.modalText}>Select History Items</Text>
-          <FlatList
-            data={historyData}
-            renderItem={({ item }) => (
-              <TouchableOpacity
-                style={[styles.item, selectedIds[item.id] ? styles.selectedItem : styles.item]}
-                onPress={() => toggleSelection(item.id)}
-              >
-                <Text style={styles.itemText}>{item.FoodName} - {item.mass}g</Text>
-              </TouchableOpacity>
-            )}
-            keyExtractor={item => item.id}
-          />
-          <Button title="Confirm Selection" onPress={confirmSelection} />
-          <Button title="Close" onPress={() => setModalVisible(false)} />
-        </View>
-      </Modal>
+  animationType="slide"
+  transparent={true}
+  visible={modalVisible}
+  onRequestClose={() => {
+    Alert.alert("Modal has been closed.");
+    setModalVisible(!modalVisible);
+  }}
+>
+  <View style={styles.modalContainer}>
+    <View style={styles.modalContent}>
+      <Text style={styles.modalHeaderText}>Select History Items</Text>
+      <FlatList
+        data={historyData}
+        renderItem={({ item }) => (
+          <TouchableOpacity
+            style={[
+              styles.item,
+              selectedIds[item.id] ? styles.selectedItem : null,
+            ]}
+            onPress={() => toggleSelection(item.id)}
+          >
+            <Text style={styles.itemText}>
+              {item.FoodName} - {item.mass}g
+            </Text>
+          </TouchableOpacity>
+        )}
+        keyExtractor={(item) => item.id}
+      />
+      <View style={styles.modalButtons}>
+        <Button
+          title="Confirm Selection"
+          onPress={confirmSelection}
+          disabled={!Object.keys(selectedIds).length}
+        />
+        <Button title="Close" onPress={() => setModalVisible(false)} />
+      </View>
+    </View>
+  </View>
+</Modal>
       <FlatList
         data={mealData}
         renderItem={({ item }) => (
