@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, Button, Modal } from 'react-native';
 import { styles } from '../Styles';
-import { getFirestore, collection, onSnapshot, addDoc, serverTimestamp } from 'firebase/firestore';
+import { getFirestore, collection, onSnapshot, doc, getDoc, setDoc, serverTimestamp } from 'firebase/firestore';
+import { format } from 'date-fns';
 
 const firestore = getFirestore();
 
@@ -15,14 +16,14 @@ const Meals = () => {
   useEffect(() => {
     // Setup real-time listeners for history and meals collections
     const unsubscribeHistory = onSnapshot(collection(firestore, 'history'), (snapshot) => {
-      const updatedHistory = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const updatedHistory = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })).reverse();
       setHistoryData(updatedHistory);
     }, error => {
       console.error('Error listening to history updates:', error);
     });
 
     const unsubscribeMeals = onSnapshot(collection(firestore, 'meals'), (snapshot) => {
-      const updatedMeals = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+      const updatedMeals = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() })).reverse();
       setMealData(updatedMeals);
     }, error => {
       console.error('Error listening to meals updates:', error);
@@ -52,8 +53,9 @@ const Meals = () => {
       return acc;
     }, {});
 
+    const mealName = format(new Date(), 'M-dd-HH-mm-ss');
     try {
-      await addDoc(collection(firestore, 'meals'), {
+      await setDoc(doc(firestore, "meals", mealName), {
         ...aggregatedNutrients,
         timestamp: serverTimestamp()
       });
