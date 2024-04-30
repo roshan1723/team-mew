@@ -1,3 +1,8 @@
+/**
+ * HomeScreen component for the kitchen scale app.
+ * This component displays information about the detected food and its nutritional values.
+ * Users can edit food information and save nutritional data to history.
+ */
 import * as React from 'react';
 import { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, TextInput, Alert } from 'react-native';
@@ -42,6 +47,7 @@ export default function HomeScreen() {
   //   }
   // }, [foodname, mass, nutritionalInfo]);
 
+  // Subscribe to changes in food data from Firestore
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(firestore, "current", "food"), (doc) => {
       if (doc.exists()) {
@@ -61,7 +67,7 @@ export default function HomeScreen() {
     return () => unsubscribe();  // This will unsubscribe from the document when the component unmounts
   }, []);
 
-
+  // Fetch food data from Firestore
   const fetchData = async () => {
     try {
       const foodRef = doc(firestore, "current", "food");
@@ -93,6 +99,8 @@ export default function HomeScreen() {
     }
   };
 
+  
+  //Calculates nutritional information based on detected food and mass using data from the Edamam Nutrition Analysis API
   const scaleNutritionalValues = (nutritionData, mass) => {
     return Object.keys(nutritionData).reduce((acc, key) => {
       if (typeof nutritionData[key] === 'number') {
@@ -104,8 +112,8 @@ export default function HomeScreen() {
     }, {});
   };
 
+  // Handle correction of food information from the app
   const handleModify = async () => {
-
     try {
       await setDoc(doc(firestore, "current", "food"), {
         foodname: capitalizeFirstLetter(foodname),
@@ -121,6 +129,7 @@ export default function HomeScreen() {
     // handleUpdatePress();
   };
 
+  // Handle saving nutritional information to history
   const handleUpdatePress = async () => {
 
     try {
@@ -138,10 +147,12 @@ export default function HomeScreen() {
     }
   };
 
+  // Handle refreshing data
   const handleRefresh = async () => {
     fetchData();
   };
 
+  // Capitalize first letter of a string
   const capitalizeFirstLetter = (string) => {
     return string.charAt(0).toUpperCase() + string.slice(1).toLowerCase();
   };

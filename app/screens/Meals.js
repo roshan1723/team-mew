@@ -1,3 +1,8 @@
+/**
+ * Meals component for managing meal creation and viewing.
+ * This component allows users to select items from the history to create a meal.
+ * It also displays existing meals with aggregated nutritional information.
+ */
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert, Button, Modal } from 'react-native';
 import { styles } from '../Styles';
@@ -17,6 +22,7 @@ const Meals = () => {
     fetchMealData();
   }, []);
 
+  // Fetch past data from Firestore database
   const fetchHistoryData = async () => {
     try {
       const querySnapshot = await getDocs(collection(firestore, 'history'));
@@ -27,6 +33,7 @@ const Meals = () => {
     }
   };
 
+  // Fetch meal data from Firestore
   const fetchMealData = async () => {
     try {
       const querySnapshot = await getDocs(collection(firestore, 'meals'));
@@ -37,6 +44,7 @@ const Meals = () => {
     }
   };
 
+  // Toggle selection of history item
   const toggleSelection = (id) => {
     setSelectedIds(prev => ({
       ...prev,
@@ -44,6 +52,7 @@ const Meals = () => {
     }));
   };
 
+  // Confirm selection and create a meal from selected history items
   const confirmSelection = async () => {
     const selectedItems = historyData.filter(item => selectedIds[item.id]);
     const aggregatedNutrients = selectedItems.reduce((acc, item) => {
@@ -69,6 +78,7 @@ const Meals = () => {
     }
   };
 
+  // Toggle expansion of meal details
   const toggleExpandedMeal = (id) => {
     setExpandedMeal(prev => prev === id ? null : id);
   };

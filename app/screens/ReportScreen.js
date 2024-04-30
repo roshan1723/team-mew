@@ -1,3 +1,8 @@
+/**
+ * HistoryEntry component for displaying and managing historical data.
+ * This component fetches and displays historical entries from Firestore.
+ * Users can expand entries to view detailed nutritional information and delete entries.
+ */
 import * as React from 'react';
 import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert } from 'react-native';
 import { styles } from '../Styles';
@@ -35,6 +40,7 @@ const HistoryEntry = () => {
     return () => unsubscribe();  // Clean up the subscription
   }, []);
 
+  // Fetch past data from Firestore database
   const fetchHistoryData = async () => {
     try {
       const querySnapshot = await getDocs(collection(firestore, 'history'));
@@ -45,10 +51,12 @@ const HistoryEntry = () => {
     }
   };
 
+  // Toggle popout of each individual item in history
   const toggleExpanded = (itemId) => {
     setExpandedItem(itemId === expandedItem ? null : itemId);
   };
 
+  // Handle deletion of history items
   const handleDelete = async (itemId) => {
     try {
       await deleteDoc(doc(firestore, 'history', itemId));
