@@ -151,7 +151,7 @@ export default function HomeScreen() {
       {foodname ? <Text style={styles.name}>{capitalizeFirstLetter(foodname)}</Text> : <Text style={styles.name}>No food identified</Text>}
       
         <TouchableOpacity onPress={handleRefresh} style={styles.modifybutton}>
-          <Text style={styles.modifybuttonText}>  ⟳</Text>
+          <Text style={styles.modifybuttonText}>⟳ Refresh</Text>
         </TouchableOpacity>
         
 
