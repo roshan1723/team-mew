@@ -10,10 +10,7 @@ import { styles } from '../Styles';
 import axios from 'axios';
 import { initializeApp } from 'firebase/app';
 import { getFirestore, doc, getDoc, setDoc, onSnapshot } from 'firebase/firestore';
-import { format } from 'date-fns'; // Make sure to install date-fns if not already installed using npm install date-fns
-
-
-// import { firebaseConfig } from '../firebaseConfig'; // Your Firebase configuration
+import { format } from 'date-fns'; 
 
 const firebaseConfig = {
   apiKey: "AIzaSyBhbabwCfGqORtZBuJ-so5tPaT2n1V6ekM",
@@ -40,13 +37,6 @@ export default function HomeScreen() {
     fetchData();
   }, []);
 
-  // useEffect(() => {
-  //   if (foodname && mass && Object.keys(nutritionalInfo).length > 0) {
-  //     console.log("Triggering update after data is set.");
-  //     handleUpdatePress();
-  //   }
-  // }, [foodname, mass, nutritionalInfo]);
-
   // Subscribe to changes in food data from Firestore
   useEffect(() => {
     const unsubscribe = onSnapshot(doc(firestore, "current", "food"), (doc) => {
@@ -55,7 +45,6 @@ export default function HomeScreen() {
         setFood(data.foodname);
         setMass(data.mass.toString());  // Assuming mass is a number and needs to be converted to string for TextInputy
         console.log("subscribe: Data updated from Firestore");
-        // handleUpdatePress();
         
       } else {
         console.log("subscribe: No such document!");
@@ -85,8 +74,6 @@ export default function HomeScreen() {
         const nutritionDoc = await getDoc(nutritionRef);
         if (nutritionDoc.exists()) {
           const nutritionalData = nutritionDoc.data();
-          // console.log("nutritional info fetched: ");
-          // console.log(nutritionDoc.data());
           const scaledData = scaleNutritionalValues(nutritionalData, data.mass);
           setNutritionalInfo(scaledData);
         } else {
@@ -125,8 +112,7 @@ export default function HomeScreen() {
     } catch (error) {
       console.error('Error saving food information:', error);
     } 
-    //call handleUpdatePress
-    // handleUpdatePress();
+    
   };
 
   // Handle saving nutritional information to history
@@ -164,9 +150,6 @@ export default function HomeScreen() {
         <TouchableOpacity onPress={handleRefresh} style={styles.modifybutton}>
           <Text style={styles.modifybuttonText}>⟳ Refresh</Text>
         </TouchableOpacity>
-        
-
-      {/* <Text style={styles.name}>Edit Food Information</Text> */}
       <TextInput
         style={styles.input}
         onChangeText={setFood}
@@ -180,21 +163,18 @@ export default function HomeScreen() {
         keyboardType="numeric"
         placeholder="Enter mass"
       />
-      {/* <TouchableOpacity onPress={handleModify} style={styles.saveButton}>
-        <Text style={styles.saveButtonText}>Save Changes</Text>
-      </TouchableOpacity> */}
 
-        <View style={styles.buttonRow}>
-        <TouchableOpacity onPress={handleModify} style={styles.modifybutton}>
-          <Text style={styles.modifybuttonText}>✎ Edit</Text>
-        </TouchableOpacity>
-        <TouchableOpacity onPress={handleUpdatePress} style={styles.modifybutton}>
-          <Text style={styles.modifybuttonText}>↓ Save</Text>
-        </TouchableOpacity>
-        </View>
+      <View style={styles.buttonRow}>
+      <TouchableOpacity onPress={handleModify} style={styles.modifybutton}>
+        <Text style={styles.modifybuttonText}>✎ Edit</Text>
+      </TouchableOpacity>
+      <TouchableOpacity onPress={handleUpdatePress} style={styles.modifybutton}>
+        <Text style={styles.modifybuttonText}>↓ Save</Text>
+      </TouchableOpacity>
+      </View>
 
 
-<View style={styles.table}>
+      <View style={styles.table}>
         <View style={styles.row}>
           <Text style={styles.cell}>Calories</Text>
           <Text style={styles.cell}>{nutritionalInfo.Calories}</Text>

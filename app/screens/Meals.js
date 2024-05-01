@@ -44,33 +44,6 @@ const Meals = () => {
   }, []);
   
 
-  // Fetch past data from Firestore database
-  // const fetchHistoryData = async () => {
-  //   try {
-  //     const querySnapshot = await getDocs(collection(firestore, 'history'));
-  //     const items = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  //     setHistoryData(items.reverse());
-  //   } catch (error) {
-  //     console.error('Error fetching history:', error);
-  //   }
-  // };
-
-  // // Fetch meal data from Firestore and then sort by timestamp
-  // const fetchMealData = async () => {
-  //   try {
-  //     const querySnapshot = await getDocs(collection(firestore, 'meals'));
-  //     const meals = querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-  //     const sortedMeals = meals.sort((a, b) => {
-  //       const timestampA = new Date(a.timestamp.toDate());
-  //       const timestampB = new Date(b.timestamp.toDate());
-  //       return timestampB - timestampA;
-  //     });
-  //     setMealData(sortedMeals);
-  //   } catch (error) {
-  //     console.error('Error fetching meals:', error);
-  //   }
-  // };
-
   const handleDelete = async (mealId) => {
     try {
       await deleteDoc(doc(firestore, 'meals', mealId));
